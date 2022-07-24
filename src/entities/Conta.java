@@ -43,10 +43,17 @@ public abstract class Conta {
 	}
 
 	public void debito (double valor) {
-		this.saldo -= valor;
+		if (valor <= saldo) {
+			this.saldo -= valor;
+		} else {
+			System.out.println("Saldo insuficiente para saque");
+		}
 	}
-	
 	public void credito (double valor) {
-		this.saldo += valor;
+		if (valor > 0) {
+			this.saldo += valor;
+		} else {
+			System.out.println("Valor de deposito inválido");
+		}
 	}
 }
