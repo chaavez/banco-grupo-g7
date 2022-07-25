@@ -30,7 +30,6 @@ public class ContaEspecial extends Conta {
 		System.out.println("Saldo: " + novoSaldo + " | Limite: " + novoLimite);
 
 		return novoSaldo;
-		
 
 	}
 }
