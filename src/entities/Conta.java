@@ -6,14 +6,14 @@ public abstract class Conta {
 
 	private int numero;
 	private String cpf;
-	private double saldo = 0;
+	protected double saldo = 0;
 	private boolean ativo;
 	
 	public Conta (int numero, String cpf) {
 		this.numero = numero;
 		this.cpf = cpf;
 	}
-	
+
 	public int getNumero() {
 		return numero;
 	}

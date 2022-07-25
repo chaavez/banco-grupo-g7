@@ -4,7 +4,7 @@ public class ContaEspecial extends Conta {
 	/* (+) usarLimite (soma no saldo e tira do limite) */
 	private static double limite = 1000.00;
 
-	public ContaEspecial(int numero, String cpf, double saldo, double limite) {
+	public ContaEspecial(int numero, String cpf) {
 		super(numero, cpf);
 	}
 
@@ -18,18 +18,19 @@ public class ContaEspecial extends Conta {
 	}
 
 	// METHOD
-	public static double usarLimite(double valor, double saldo) {
-		double saldoComLimite = valor;
-		double novoLimite = limite - (valor - saldo);
-		System.out.println(
-				"Você està utilizando seu limite | Saldo atual: " + saldoComLimite + " | Limite atual: " + novoLimite);
+	public double usarLimite(double valor) {
+		
+		double novoLimite = limite - (valor - this.saldo);
+		System.out.println("Voce esta utilizando seu limite | Saldo atual: " + valor + " | Limite atual: " + novoLimite);
 		System.out.println();
 		System.out.println("Debito concluido!");
 
-		double novoSaldo = valor - saldoComLimite;
-		System.out.println("Saldo: " + novoSaldo + " | Limite: " + novoLimite);
-
-		return novoSaldo;
+		System.out.println("Saldo final: 0 "  + " | Limite final: " + novoLimite);
+		
+		this.saldo = 0;
+		limite = novoLimite;
+		
+		return novoLimite;
 
 	}
 }
