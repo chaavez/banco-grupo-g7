@@ -3,6 +3,7 @@ package app;
 import java.util.Scanner;
 
 import entities.ContaEspecial;
+import entities.ContaCorrente;
 import entities.ContaEmpresa;
 
 public class App {
@@ -21,7 +22,7 @@ public class App {
 				break;
 
 			case 2:
-				;
+				contaCorrente(sc);
 				break;
 
 			case 3:
@@ -39,11 +40,11 @@ public class App {
 
 			default:
 				if (opcao != 6) {
-					System.out.println("Op��o inv�lida!");
+					System.out.println("Opção inválida!");
 				}
 			}
 		} while (opcao != 6);
-		System.out.println("Aplica��o Encerrada");
+		System.out.println("Aplicação Encerrada");
 		sc.close();
 	}
 
@@ -51,14 +52,14 @@ public class App {
 		System.out.println("BANCO MUNDIAL G7");
 		System.out.println("Simplificando sua vida");
 		System.out.println();
-		System.out.println("MENU DE OP��ES");
-		System.out.println("[1] - CONTA POUPAN�A");
+		System.out.println("MENU DE OPÇÕES");
+		System.out.println("[1] - CONTA POUPANÇA");
 		System.out.println("[2] - CONTA CORRENTE");
 		System.out.println("[3] - CONTA ESPECIAL");
 		System.out.println("[4] - CONTA EMPRESA");
 		System.out.println("[5] - CONTA ESTUDANTIL");
 		System.out.println("[6] - SAIR");
-		System.out.print("Escolha a op��o: ");
+		System.out.print("Escolha a opção: ");
 		int opcao = sc.nextInt();
 		return opcao;
 	}
@@ -77,7 +78,7 @@ public class App {
 		System.out.println("Saldo:" + movimento.getSaldo());
 
 		do {
-			System.out.print("Movimento \'D'\" d�bito ou \'C'\" cr�dito: ");
+			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
 			String op = sc.next().trim().toLowerCase().substring(0, 1);
 
 			if (op.equals("d")) {
@@ -150,7 +151,7 @@ public class App {
 
 		// MOVIMENTACOES
 		do {
-			System.out.print("Movimento \'D'\" d�bito ou \'C'\" cr�dito: ");
+			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
 			String op = sc.next().trim().toLowerCase().substring(0, 1);
 
 			// DEBITO
@@ -165,7 +166,7 @@ public class App {
 					sld = novoSaldo;
 					System.out.println("Saldo: " + novoSaldo + " | Limite: " + ContaEspecial.getLimite());
 				} else if (valor - sld > ContaEspecial.getLimite()) {
-					System.out.println("Movimenta��o negada. Seu limite � de apenas 1000 reais");
+					System.out.println("Movimentação negada. Seu limite é de apenas 1000 reais");
 				} else if (sld - valor <= ContaEspecial.getLimite()) {
 					double novoSaldo = movimento.usarLimite(valor, sld);
 					
@@ -199,4 +200,64 @@ public class App {
 		} while (continuar.equalsIgnoreCase("s"));
 
 	}
+
+	private static void contaCorrente(Scanner sc) {
+		ContaCorrente cc = new ContaCorrente(0, null);
+		
+		int contador = 1;
+		String continuar;
+		
+		System.out.println("BANCO MUNDIAL G7 \n"
+				+ "Simplificando sua vida \n"
+					+ "\n"
+					+ "CONTA CORRENTE"
+					+ "\n"
+					+ "Saldo: " + cc.getSaldo()
+				);
+		
+		//INSERÇÃO DE DADOS REFERENTE A DÉBITO E CRÉDITO
+		do {
+			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
+			String op = sc.next().trim().toLowerCase().substring(0, 1);
+
+			if (op.equals("d")) {
+				System.out.print("Valor movimento: R$");
+				double valor = sc.nextDouble();
+				cc.debito(valor);
+
+			} else if (op.equals("c")) {
+				System.out.print("Valor movimento: R$");
+				double valor2 = sc.nextDouble();
+				cc.credito(valor2);
+
+			} else if (op != "d" && op != "c") {
+				System.out.print("Digite \'C'\" ou \'D'\": ");
+			}
+
+			System.out.print("Continuar S/N: ");
+			continuar = sc.next().trim().toLowerCase().substring(0, 1);
+
+			contador++;
+			if (contador > 10) {
+				break;
+			}
+			
+		} while (continuar.equalsIgnoreCase("s"));
+		
+		//ESCOLHA NA OPÇÃO DE QUERER OU NÃO OS CHEQUES
+		System.out.print("\n Você possui até 3 cheques disponíveis liberados! Deseja solicitar? (S/N)");
+		continuar = sc.next().trim().substring(0, 1);
+		
+		//INPUT PARA A CONDIÇÃO DO MÉTODO
+			if (continuar.equalsIgnoreCase("s")) {
+				System.out.print("\n Quantidade de cheques: ");
+				cc.contadorTalao = sc.nextInt();
+				cc.liberaCheque();
+				};
+		
+		//RETORNO COM O CÁLCULO DOS INPUTS DÉBITO E CRÉDITO COM A DIFERENÇA DA ESCOLHA
+		System.out.println("Saldo:" + cc.getSaldo());
+	
 }
+	}
+
