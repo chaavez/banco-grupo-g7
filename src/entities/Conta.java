@@ -1,19 +1,24 @@
 package entities;
 
-//ANDERSON CHAVES DE MORAIS
+	//ANDERSON CHAVES DE MORAIS
 
 public abstract class Conta {
 
 	private int numero;
 	private String cpf;
-	private double saldo = 0;
+	double saldo = 0;
 	private boolean ativo;
 	
-	public Conta (int numero, String cpf) {
+	public Conta (int numero, String cpf, double saldo) {
 		this.numero = numero;
 		this.cpf = cpf;
+		this.saldo = saldo;
 	}
 	
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
+	}
+
 	public int getNumero() {
 		return numero;
 	}
@@ -42,18 +47,17 @@ public abstract class Conta {
 		return saldo;
 	}
 
-	public void debito (double valor) {
-		if (valor <= saldo) {
-			this.saldo -= valor;
-		} else {
-			System.out.println("Saldo insuficiente para saque");
-		}
+	public double debito (double valor) {
+		Double novoSaldo = saldo - valor;
+		
+		if(novoSaldo < 0) {			
+			return saldo;
+		}	
+		
+		saldo = novoSaldo;
+		return novoSaldo;
 	}
-	public void credito (double valor) {
-		if (valor > 0) {
-			this.saldo += valor;
-		} else {
-			System.out.println("Valor de deposito inválido");
-		}
+	public double credito (double valor) {
+		return saldo += valor;
 	}
 }
