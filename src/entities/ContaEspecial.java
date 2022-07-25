@@ -3,21 +3,12 @@ package entities;
 public class ContaEspecial extends Conta {
 	/* (+) usarLimite (soma no saldo e tira do limite) */
 	private static double limite = 1000.00;
-	private static double saldo = 0;
 
 	public ContaEspecial(int numero, String cpf, double saldo, double limite) {
-		super(numero, cpf, saldo);
+		super(numero, cpf);
 	}
 
 	// GETTERS AND SETTERS
-	public double getSaldo() {
-		return saldo;
-	}
-
-	public void setSaldo(double saldo) {
-		ContaEspecial.saldo = saldo;
-	}
-
 	public static double getLimite() {
 		return limite;
 	}
