@@ -2,7 +2,7 @@ package entities;
 
 	//ANDERSON CHAVES DE MORAIS
 
-public abstract class Conta {
+public  class Conta {
 
 	private int numero;
 	private String cpf;
@@ -49,6 +49,7 @@ public abstract class Conta {
 			System.out.println("Saldo insuficiente para saque");
 		}
 	}
+	
 	public void credito (double valor) {
 		if (valor > 0) {
 			this.saldo += valor;

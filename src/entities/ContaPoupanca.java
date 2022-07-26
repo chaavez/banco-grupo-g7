@@ -16,13 +16,23 @@ public class ContaPoupanca extends Conta{
 		this.diaAniversarioPoupanca = diaAniversarioPoupanca;
 	}
 
+	///// TIPO CONTA /////
+	public void tipoConta() {
+		System.out.println();
+		System.out.println("CONTA POUPANÇA");
+		System.out.println();
+		System.out.println("Saldo: R$ " + getSaldo());
+	}
 	
 	///// Construtor Conta Poupanca /////
-	public ContaPoupanca(int numero, String cpf, int diaAniversarioPoupanca) {
+	public ContaPoupanca(int numero, String cpf, int diaAniversarioPoupanca, boolean ativo) {
 		super(numero, cpf);
+		this.setAtivo(ativo);
+		this.saldo = 0;
 		this.setDiaAniversarioPoupanca(diaAniversarioPoupanca);
 	}
 	
+	///// Metodo para Registro dos Movimentos /////
 	public void movimento(Scanner sc, ContaPoupanca ctPoupanca) {
 		String continuar;
 		int contador = 1;
@@ -33,13 +43,16 @@ public class ContaPoupanca extends Conta{
 	
 			if (op.equals("d")) {
 				System.out.print("Valor movimento: R$");
-				double valor = sc.nextDouble();
-				ctPoupanca.debito(valor);
+				double debito = sc.nextDouble();
+				ctPoupanca.debito(debito);
+				ctPoupanca.tipoConta();
 	
 			} else if (op.equals("c")) {
 				System.out.print("Valor movimento: R$");
-				double valor2 = sc.nextDouble();
-				ctPoupanca.credito(valor2);
+				double credito = sc.nextDouble();
+				ctPoupanca.credito(credito);
+				ctPoupanca.tipoConta();
+
 	
 			} else if (op != "d" && op != "c") {
 				System.out.print("Digite \'C'\" ou \'D'\": ");
@@ -49,6 +62,7 @@ public class ContaPoupanca extends Conta{
 			continuar = sc.next().trim().toLowerCase().substring(0, 1);
 	
 			contador++;
+			
 			if (contador >= 10) {
 				break;
 			}
@@ -57,7 +71,7 @@ public class ContaPoupanca extends Conta{
 		
 	}	
 	
-		
+	
 	// Metodo Correcao no Dia do Aniversario da Conta
 	public double correcao(double saldo) {
 		saldo = saldo * 0.005;
