@@ -2,7 +2,7 @@ package entities;
 
 	//ANDERSON CHAVES DE MORAIS
 
-public abstract class Conta {
+public  class Conta {
 
 	private int numero;
 	private String cpf;

@@ -67,6 +67,7 @@ public class App {
 	
 	
 	private static void cabecalho() {
+		System.out.println();
 		System.out.println("BANCO MUNDIAL G7");
 		System.out.println("Simplificando sua vida\n\n");
 	}
@@ -85,7 +86,7 @@ public class App {
 	// SET CPF CONTA
 	public static String setCpf(Scanner sc) {
 		System.out.println("Digite seu cpf: ");
-		String cpf = sc.nextLine();
+		String cpf = sc.next();
 
 		return cpf;
 	}
@@ -304,6 +305,24 @@ public class App {
 		System.out.println("Digite o dia de criacao de conta: ");
 		int diaAniversario = sc.nextInt();
 		
+
 		ContaPoupanca ctPoupanca = new ContaPoupanca(num, cpf, diaAniversario);
-	}	
+	
+
+
+		ContaPoupanca ctPoupanca = new ContaPoupanca(num, cpf, diaAniversario, true);
+		
+		ctPoupanca.tipoConta();
+		
+		ctPoupanca.movimento(sc, ctPoupanca);
+		
+		
+		
+		
+	}
+	
+	
+	
 }
+
+
