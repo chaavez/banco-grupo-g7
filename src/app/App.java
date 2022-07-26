@@ -5,6 +5,7 @@ import java.util.Scanner;
 import entities.ContaEspecial;
 import entities.ContaCorrente;
 import entities.ContaEmpresa;
+import entities.ContaPoupanca;
 
 public class App {
 
@@ -18,7 +19,7 @@ public class App {
 			switch (opcao) {
 
 			case 1:
-				;
+				contaPoupanca(sc);
 				break;
 
 			case 2:
@@ -47,11 +48,15 @@ public class App {
 		System.out.println("Aplicação Encerrada");
 		sc.close();
 	}
-
-	private static int menu(Scanner sc) {
+	
+	private static void cabecalho() {
 		System.out.println("BANCO MUNDIAL G7");
 		System.out.println("Simplificando sua vida");
 		System.out.println();
+	}
+
+	private static int menu(Scanner sc) {
+		cabecalho();
 		System.out.println("MENU DE OPÇÕES");
 		System.out.println("[1] - CONTA POUPANÇA");
 		System.out.println("[2] - CONTA CORRENTE");
@@ -62,6 +67,23 @@ public class App {
 		System.out.print("Escolha a opção: ");
 		int opcao = sc.nextInt();
 		return opcao;
+	}
+	
+	// SET NUMERO CONTA
+	public static int setNum(Scanner sc) {
+		System.out.println("Digite seu numero: ");
+		int num = sc.nextInt();
+		
+		return num;
+	}
+	
+	
+	// SET CPF CONTA
+	public static String setCpf(Scanner sc) {
+		System.out.println("Digite seu cpf: ");
+		String cpf = sc.nextLine();
+
+		return cpf;
 	}
 
 	private static void contaEmpresa(Scanner sc) {
@@ -258,6 +280,30 @@ public class App {
 		//RETORNO COM O CÁLCULO DOS INPUTS DÉBITO E CRÉDITO COM A DIFERENÇA DA ESCOLHA
 		System.out.println("Saldo:" + cc.getSaldo());
 	
-}
 	}
+	
+	
+
+	
+	private static void contaPoupanca(Scanner sc) {
+		
+		int num = setNum(sc);
+		String cpf = setCpf(sc);
+		
+		System.out.println("Digite o dia de criacao de conta: ");
+		int diaAniversario = sc.nextInt();
+		
+		ContaPoupanca ctPoupanca = new ContaPoupanca(num, cpf, diaAniversario);
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+}
 

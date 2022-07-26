@@ -22,7 +22,7 @@ public class ContaEspecial extends Conta {
 		double saldoComLimite = valor;
 		double novoLimite = limite - (valor - saldo);
 		System.out.println(
-				"Você està utilizando seu limite | Saldo atual: " + saldoComLimite + " | Limite atual: " + novoLimite);
+				"Vocï¿½ estï¿½ utilizando seu limite | Saldo atual: " + saldoComLimite + " | Limite atual: " + novoLimite);
 		System.out.println();
 		System.out.println("Debito concluido!");
 
