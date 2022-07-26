@@ -49,8 +49,7 @@ public abstract class Conta {
 			System.out.println("Saldo insuficiente para saque");
 		}
 	}
-		
-	
+
 	public void credito (double valor) {
 		if (valor > 0) {
 			this.saldo += valor;

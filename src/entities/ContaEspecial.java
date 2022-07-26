@@ -18,10 +18,18 @@ public class ContaEspecial extends Conta {
 	}
 
 	// METHOD
+<<<<<<< HEAD
+	public static double usarLimite(double valor, double saldo) {
+		double saldoComLimite = valor;
+		double novoLimite = limite - (valor - saldo);
+		System.out.println(
+				"Voc� est� utilizando seu limite | Saldo atual: " + saldoComLimite + " | Limite atual: " + novoLimite);
+=======
 	public double usarLimite(double valor) {
 		
 		double novoLimite = limite - (valor - this.saldo);
 		System.out.println("Voce esta utilizando seu limite | Saldo atual: " + valor + " | Limite atual: " + novoLimite);
+>>>>>>> 7ae8c678676dc3a77bbea2fc450b65ac931ca90d
 		System.out.println();
 		System.out.println("Debito concluido!");
 
