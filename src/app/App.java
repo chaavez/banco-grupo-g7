@@ -160,48 +160,55 @@ public class App {
 		int num = sc.nextInt();
 		System.out.println("Digite seu cpf: ");
 		String cpf = sc.next();
-		System.out.println("Digite seu saldo: ");
-		double sld = sc.nextDouble();
 
 		// CRIA NOVO CLIENTE
-		ContaEspecial movimento = new ContaEspecial(num, cpf, sld, ContaEspecial.getLimite());
-		System.out.println("Saldo atual: " + sld);
+		ContaEspecial movimento = new ContaEspecial(num, cpf);
+		System.out.println("Saldo: " + movimento.getSaldo());
 		System.out.println("Limite atual: " + ContaEspecial.getLimite());
 		System.out.println();
 		System.out.println("--------------");
 		System.out.println();
-
+		
+		double saldo = movimento.getSaldo();
+		System.out.println("Saldo: " + saldo);
+		double limite = ContaEspecial.getLimite();
+		System.out.println("Limite: " + limite);
+		
 		// MOVIMENTACOES
 		do {
+			
 			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
 			String op = sc.next().trim().toLowerCase().substring(0, 1);
-
+			
 			// DEBITO
 			if (op.equals("d")) {
-				
 				System.out.println("2 - DEBITO");
 				System.out.println("Digite o valor a debitar");
 				int valor = sc.nextInt();
 
-				if (valor < sld) {
+				if (valor < saldo) {
 					double novoSaldo =  movimento.debito(valor);
-					sld = novoSaldo;
-					System.out.println("Saldo: " + novoSaldo + " | Limite: " + ContaEspecial.getLimite());
-				} else if (valor - sld > ContaEspecial.getLimite()) {
+					saldo = novoSaldo;
+					System.out.println("Saldo: " + novoSaldo + " | Limite: " + limite);
+				} else if (valor - saldo > limite) {
 					System.out.println("Movimentação negada. Seu limite é de apenas 1000 reais");
-				} else if (sld - valor <= ContaEspecial.getLimite()) {
-					double novoSaldo = movimento.usarLimite(valor, sld);
-					
-					sld = novoSaldo;
+				} else if (valor - saldo <= limite) {
+//					System.out.println("----Limite: " + limite);
+//					System.out.println("----Saldo: " + saldo);
+					double novoLimite = movimento.usarLimite(valor);
+					saldo = 0;
+					limite = novoLimite;
 				}
 
-				// CREDITO
+			// CREDITO
 			} else if (op.equals("c")) {
+				System.out.println("Saldo: " + saldo + " | Limite: " + limite);
 				System.out.println("1 - CREDITO");
 				System.out.println("Digite o valor a creditar");
 				int valor = sc.nextInt();
 				double saldoNovo = movimento.credito(valor);
-				System.out.println("Saldo atual: " + saldoNovo + "Limite atual: " + ContaEspecial.getLimite());
+				System.out.println("Saldo atual: " + saldoNovo + " | Limite atual: " + limite);
+				saldo = saldoNovo;
 
 			} else if (op != "d" && op != "c") {
 				System.out.print("Digite \'C'\" ou \'D'\": ");

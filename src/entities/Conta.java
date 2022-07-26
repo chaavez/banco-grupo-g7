@@ -6,14 +6,14 @@ public abstract class Conta {
 
 	private int numero;
 	private String cpf;
-	private double saldo = 0;
+	protected double saldo = 0;
 	private boolean ativo;
 	
 	public Conta (int numero, String cpf) {
 		this.numero = numero;
 		this.cpf = cpf;
 	}
-	
+
 	public int getNumero() {
 		return numero;
 	}
@@ -42,17 +42,18 @@ public abstract class Conta {
 		return saldo;
 	}
 
-	public double debito (double valor) {
-		Double novoSaldo = saldo - valor;
-		
-		if(novoSaldo < 0) {			
-			return saldo;
-		}	
-		
-		saldo = novoSaldo;
-		return novoSaldo;
+	public void debito (double valor) {
+		if (valor <= saldo) {
+			this.saldo -= valor;
+		} else {
+			System.out.println("Saldo insuficiente para saque");
+		}
 	}
-	public double credito (double valor) {
-		return saldo += valor;
+	public void credito (double valor) {
+		if (valor > 0) {
+			this.saldo += valor;
+		} else {
+			System.out.println("Valor de deposito inválido");
+		}
 	}
 }
