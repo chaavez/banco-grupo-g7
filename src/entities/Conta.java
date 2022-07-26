@@ -6,7 +6,7 @@ public abstract class Conta {
 
 	private int numero;
 	private String cpf;
-	protected double saldo = 0;
+	private double saldo = 0;
 	private boolean ativo;
 	
 	public Conta (int numero, String cpf) {
