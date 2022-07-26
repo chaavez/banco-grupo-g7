@@ -91,60 +91,66 @@ public class App {
 		return cpf;
 	}
 
-	private static void contaEmpresa(Scanner sc) {
+	
+		private static void contaEmpresa(Scanner sc) throws IOException {
 
-		ContaEmpresa movimento = new ContaEmpresa();
+			ContaEmpresa movimento = new ContaEmpresa(2828, "98765432112");
 
-		int contador = 1;
-		String continuar;
+			int contador = 1;
+			String continuar;
 
-		System.out.println("BANCO MUNDIAL G7");
-		System.out.println("Simplificando sua vida");
-		System.out.println();
-		System.out.println("CONTA EMPRESA");
-		System.out.println("Saldo:" + movimento.getSaldo());
+			cabecalho();
+			System.out.println();
+			System.out.println("CONTA EMPRESA");
+			System.out.println("Saldo Atual:" + movimento.getSaldo());
 
-		do {
-			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
-			String op = sc.next().trim().toLowerCase().substring(0, 1);
+			do {
+				System.out.print("Movimento 'D' débito ou 'C' crédito: ");
+				String op = sc.next().trim().toLowerCase().substring(0, 1);
 
-			if (op.equals("d")) {
-				System.out.print("Valor movimento: R$");
-				double valor = sc.nextDouble();
-				movimento.debito(valor);
+				if (op.equals("d")) {
+					System.out.print("Valor movimento: R$");
+					double valor = sc.nextDouble();
+					movimento.debito(valor);
 
-			} else if (op.equals("c")) {
-				System.out.print("Valor movimento: R$");
-				double valor2 = sc.nextDouble();
-				movimento.credito(valor2);
+				} else if (op.equals("c")) {
+					System.out.print("Valor movimento: R$");
+					double valor2 = sc.nextDouble();
+					movimento.credito(valor2);
 
-			} else if (op != "d" && op != "c") {
-				System.out.print("Digite \'C'\" ou \'D'\": ");
-			}
+				} else if (op != "d" && op != "c") {
+					System.out.print("Digite 'C' ou 'D': ");
+				}	
+				
+				System.out.print("Continuar S/N: ");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
 
-			System.out.print("Continuar S/N: ");
-			continuar = sc.next().trim().toLowerCase().substring(0, 1);
+				contador++;
+				if (contador > 10 || continuar.equalsIgnoreCase("N") ) {
+					System.out.print("Vc topa um emprestimo? Vc tem R$" + movimento.getEmprestimoEmpresa()
+							+ " liberado!!! Vai pegar quanto? S/N?");
+					continuar = sc.next().trim().substring(0, 1);
+					contador = 1;
 
-			contador++;
-			if (contador > 10) {
-				break;
-			}
+					if (continuar.equalsIgnoreCase("S")) {
+						System.out.print("Valor do Emprestimo: ");
+						double valorEmprestimo = sc.nextDouble();
+						movimento.pedirEmprestimo(valorEmprestimo);
+					}
+					
+					System.out.print("Continuar S/N: ");
+					continuar = sc.next().trim().toLowerCase().substring(0, 1);
+					
+				}
+				
+				
 
-		} while (continuar.equalsIgnoreCase("s"));
+			} while (continuar.equalsIgnoreCase("s"));
+			System.out.println("Saldo Atual:" + movimento.getSaldo());
 
-		System.out.print("Vc topa um emprestimo? Vc tem R$" + movimento.getEmprestimoEmpresa()
-				+ " liberado!!! Vai pegar quanto? S/N?");
-		continuar = sc.next().trim().substring(0, 1);
+			menu();
 
-		if (continuar.equalsIgnoreCase("S")) {
-			System.out.print("Valor do Emprestimo: ");
-			double valorEmprestimo = sc.nextDouble();
-			movimento.pedirEmprestimo(valorEmprestimo);
 		}
-
-		System.out.println("Saldo:" + movimento.getSaldo());
-
-	}
 
 	public static void contaEspecial(Scanner sc) {
 
