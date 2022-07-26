@@ -50,7 +50,7 @@ public abstract class Conta {
 		}
 	}
 		
-	}
+	
 	public void credito (double valor) {
 		if (valor > 0) {
 			this.saldo += valor;
@@ -58,3 +58,4 @@ public abstract class Conta {
 			System.out.println("Valor de deposito inválido");
 		}
 	}
+}

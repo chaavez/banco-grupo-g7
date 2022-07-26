@@ -8,7 +8,7 @@ package entities;
 		private Double emprestimoEmpresa = 10000d;	
 					
 
-		public Double getSaldo() {
+		public double getSaldo() {
 			return saldo;
 		}
 
@@ -24,7 +24,7 @@ package entities;
 			this.emprestimoEmpresa = emprestimoEmpresa;
 		}	
 		
-		public Double debito(Double valor) { // o saldo não pode ficar negativo
+		public Double debito(Double valor) { // o saldo nï¿½o pode ficar negativo
 			
 			Double novoSaldo = saldo - valor;
 			
@@ -40,7 +40,7 @@ package entities;
 			return saldo += valor;
 		}		
 				
-		//método soma no saldo e tira do emprestimo
+		//mï¿½todo soma no saldo e tira do emprestimo
 		public double pedirEmprestimo(double valor) {
 		if(valor <= emprestimoEmpresa && valor > 0)
 		emprestimoEmpresa -= valor;	

@@ -1,5 +1,6 @@
 package app;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import entities.ContaEspecial;
@@ -8,60 +9,62 @@ import entities.ContaEmpresa;
 
 public class App {
 
-	public static void main(String[] args) {
-		String continuar;
-		int opcao;
-		Scanner sc = new Scanner(System.in);
-
-		do {
-			opcao = menu(sc);
-			switch (opcao) {
-
-			case 1:
-				;
-				break;
-
-			case 2:
-				contaCorrente(sc);
-				break;
-
-			case 3:
-				contaEspecial(sc);
-				;
-				break;
-
-			case 4:
-				contaEmpresa(sc);
-				break;
-
-			case 5:
-				;
-				break;
-
-			default:
-				if (opcao != 6) {
-					System.out.println("Opção inválida!");
-				}
-			}
-		} while (opcao != 6);
-		System.out.println("Aplicação Encerrada");
-		sc.close();
+	public static void main(String[] args) throws IOException {
+		menu();
 	}
 
-	private static int menu(Scanner sc) {
-		System.out.println("BANCO MUNDIAL G7");
-		System.out.println("Simplificando sua vida");
-		System.out.println();
-		System.out.println("MENU DE OPÇÕES");
-		System.out.println("[1] - CONTA POUPANÇA");
-		System.out.println("[2] - CONTA CORRENTE");
-		System.out.println("[3] - CONTA ESPECIAL");
-		System.out.println("[4] - CONTA EMPRESA");
-		System.out.println("[5] - CONTA ESTUDANTIL");
-		System.out.println("[6] - SAIR");
-		System.out.print("Escolha a opção: ");
-		int opcao = sc.nextInt();
-		return opcao;
+	private static void menu() throws IOException {
+		Scanner sc = new Scanner(System.in);
+		int opcao;
+		
+		do {
+			System.out.println("BANCO MUNDIAL G7");
+			System.out.println("Simplificando sua vida\n\n");
+			System.out.println("MENU DE OPÇÕES");
+			System.out.println("[1] - CONTA POUPANÇA");
+			System.out.println("[2] - CONTA CORRENTE");
+			System.out.println("[3] - CONTA ESPECIAL");
+			System.out.println("[4] - CONTA EMPRESA");
+			System.out.println("[5] - CONTA ESTUDANTIL");
+			System.out.println("[6] - SAIR");
+			System.out.print("Escolha a opção: ");
+			opcao = sc.nextInt();
+				
+			switch (opcao) {
+				case 1:
+					;
+					break;
+	
+				case 2:
+					contaCorrente(sc);
+					break;
+	
+				case 3:
+					contaEspecial(sc);
+					;
+					break;
+	
+				case 4:
+					contaEmpresa(sc);
+					break;
+	
+				case 5:
+					;
+					break;
+	
+				default:
+					if (opcao != 6) {
+						System.out.println("Opção inválida!");
+						System.out.println("Escolha uma opção na lista!");
+						System.out.println("Aperte qualquer tecla para continuar!");
+						System.in.read();
+					}
+				}
+		} while (opcao != 6);
+		System.out.println("Aplicação Encerrada");
+		System.out.println("Obrigado por usar o nosso Banco, Estamos aqui para Simplificar sua vida!");
+		System.in.read();
+		sc.close();
 	}
 
 	private static void contaEmpresa(Scanner sc) {
@@ -265,6 +268,6 @@ public class App {
 		//RETORNO COM O CÁLCULO DOS INPUTS DÉBITO E CRÉDITO COM A DIFERENÇA DA ESCOLHA
 		System.out.println("Saldo:" + cc.getSaldo());
 	
-}
+		}
 	}
 
