@@ -47,11 +47,7 @@ public abstract class Conta {
 
 	
 	public void debito (double valor) {
-		if (valor <= saldo) {
 			this.saldo -= valor;
-		} else {
-			System.out.println("Operação inválida");
-		}
 	}
 	
 	public void credito (double valor) {
