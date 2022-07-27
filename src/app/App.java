@@ -1,22 +1,35 @@
 package app;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import entities.ContaEspecial;
 import entities.ContaCorrente;
 import entities.ContaEmpresa;
+import entities.ContaPoupanca;
 
 public class App {
+	public static void main(String[] args) throws IOException {
+		menu();
+	}
 
-	public static void main(String[] args) {
-		String continuar;
-		int opcao;
+	private static void menu() throws IOException {
 		Scanner sc = new Scanner(System.in);
+		int opcao;
 
 		do {
-			opcao = menu(sc);
-			switch (opcao) {
+			cabecalho();
+			System.out.println("MENU DE OPÇÕES");
+			System.out.println("[1] - CONTA POUPANÇA");
+			System.out.println("[2] - CONTA CORRENTE");
+			System.out.println("[3] - CONTA ESPECIAL");
+			System.out.println("[4] - CONTA EMPRESA");
+			System.out.println("[5] - CONTA ESTUDANTIL");
+			System.out.println("[6] - SAIR");
+			System.out.print("Escolha a opção: ");
+			opcao = sc.nextInt();
 
+			switch (opcao) {
 			case 1:
 				;
 				break;
@@ -40,45 +53,54 @@ public class App {
 
 			default:
 				if (opcao != 6) {
-					System.out.println("Opção inválida!");
+					System.out.println("\nOpção inválida!");
+					System.out.println("Escolha uma opção na lista!");
+					System.in.read();
 				}
 			}
 		} while (opcao != 6);
-		System.out.println("Aplicação Encerrada");
+		System.out.println("\nAplicação Encerrada");
+		System.out.println("Obrigado por usar o nosso Banco! \nEstamos aqui para Simplificar sua vida!");
+		System.in.read();
 		sc.close();
 	}
 
-	private static int menu(Scanner sc) {
-		System.out.println("BANCO MUNDIAL G7");
-		System.out.println("Simplificando sua vida");
+	private static void cabecalho() {
 		System.out.println();
-		System.out.println("MENU DE OPÇÕES");
-		System.out.println("[1] - CONTA POUPANÇA");
-		System.out.println("[2] - CONTA CORRENTE");
-		System.out.println("[3] - CONTA ESPECIAL");
-		System.out.println("[4] - CONTA EMPRESA");
-		System.out.println("[5] - CONTA ESTUDANTIL");
-		System.out.println("[6] - SAIR");
-		System.out.print("Escolha a opção: ");
-		int opcao = sc.nextInt();
-		return opcao;
+		System.out.println("BANCO MUNDIAL G7");
+		System.out.println("Simplificando sua vida\n\n");
 	}
 
-	private static void contaEmpresa(Scanner sc) {
+	// SET NUMERO CONTA
+	public static int setNum(Scanner sc) {
+		System.out.println("Digite seu numero: ");
+		int num = sc.nextInt();
 
-		ContaEmpresa movimento = new ContaEmpresa();
+		return num;
+	}
+
+	// SET CPF CONTA
+	public static String setCpf(Scanner sc) {
+		System.out.println("Digite seu cpf: ");
+		String cpf = sc.next();
+
+		return cpf;
+	}
+
+	private static void contaEmpresa(Scanner sc) throws IOException {
+
+		ContaEmpresa movimento = new ContaEmpresa(2828, "98765432112");
 
 		int contador = 1;
 		String continuar;
 
-		System.out.println("BANCO MUNDIAL G7");
-		System.out.println("Simplificando sua vida");
+		cabecalho();
 		System.out.println();
 		System.out.println("CONTA EMPRESA");
-		System.out.println("Saldo:" + movimento.getSaldo());
+		System.out.println("Saldo Atual:" + movimento.getSaldo());
 
 		do {
-			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
+			System.out.print("Movimento 'D' débito ou 'C' crédito: ");
 			String op = sc.next().trim().toLowerCase().substring(0, 1);
 
 			if (op.equals("d")) {
@@ -92,137 +114,64 @@ public class App {
 				movimento.credito(valor2);
 
 			} else if (op != "d" && op != "c") {
-				System.out.print("Digite \'C'\" ou \'D'\": ");
+				System.out.print("Digite 'C' ou 'D': ");
 			}
 
 			System.out.print("Continuar S/N: ");
 			continuar = sc.next().trim().toLowerCase().substring(0, 1);
 
 			contador++;
-			if (contador > 10) {
-				break;
+			if (contador > 10 || continuar.equalsIgnoreCase("N")) {
+				System.out.print("Vc topa um emprestimo? Vc tem R$" + movimento.getEmprestimoEmpresa()
+						+ " liberado!!! Vai pegar quanto? S/N?");
+				continuar = sc.next().trim().substring(0, 1);
+				contador = 1;
+
+				if (continuar.equalsIgnoreCase("S")) {
+					System.out.print("Valor do Emprestimo: ");
+					double valorEmprestimo = sc.nextDouble();
+					movimento.pedirEmprestimo(valorEmprestimo);
+				}
+
+				System.out.print("Continuar S/N: ");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
+
 			}
 
 		} while (continuar.equalsIgnoreCase("s"));
+		System.out.println("Saldo Atual:" + movimento.getSaldo());
 
-		System.out.print("Vc topa um emprestimo? Vc tem R$" + movimento.getEmprestimoEmpresa()
-				+ " liberado!!! Vai pegar quanto? S/N?");
-		continuar = sc.next().trim().substring(0, 1);
-
-		if (continuar.equalsIgnoreCase("S")) {
-			System.out.print("Valor do Emprestimo: ");
-			double valorEmprestimo = sc.nextDouble();
-			movimento.pedirEmprestimo(valorEmprestimo);
-		}
-
-		System.out.println("Saldo:" + movimento.getSaldo());
+		menu();
 
 	}
 
 	public static void contaEspecial(Scanner sc) {
 
-		int contador = 1;
-		String continuar;
-
-		// CABECALHO
-		System.out.println();
-		System.out.println("--------------");
-		System.out.println();
-		System.out.println("BANCO MUNDIAL G7");
-		System.out.println("Simplificando sua vida");
-		System.out.println();
-		System.out.println("CONTA ESPECIAL");
-
 		// INPUT VALORES CLIENTE
-		System.out.println("Digite seu numero: ");
-		int num = sc.nextInt();
-		System.out.println("Digite seu cpf: ");
-		String cpf = sc.next();
+		int num = setNum(sc);
+		String cpf = setCpf(sc);
+		double limite = ContaEspecial.getLimite();
 
 		// CRIA NOVO CLIENTE
-		ContaEspecial movimento = new ContaEspecial(num, cpf);
-		System.out.println("Saldo: " + movimento.getSaldo());
-		System.out.println("Limite atual: " + ContaEspecial.getLimite());
-		System.out.println();
-		System.out.println("--------------");
-		System.out.println();
-		
-		double saldo = movimento.getSaldo();
-		System.out.println("Saldo: " + saldo);
-		double limite = ContaEspecial.getLimite();
-		System.out.println("Limite: " + limite);
-		
-		// MOVIMENTACOES
-		do {
-			
-			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
-			String op = sc.next().trim().toLowerCase().substring(0, 1);
-			
-			// DEBITO
-			if (op.equals("d")) {
-				System.out.println("2 - DEBITO");
-				System.out.println("Digite o valor a debitar");
-				int valor = sc.nextInt();
+		ContaEspecial ctEspecial = new ContaEspecial(num, cpf, limite);
+		double saldo = ctEspecial.getSaldo();
+		System.out.println("\nSaldo Inicial: " + saldo);
+		System.out.println("Limite Inicial: " + limite);
 
-				if (valor < saldo) {
-					double novoSaldo =  movimento.debito(valor);
-					saldo = novoSaldo;
-					System.out.println("Saldo: " + novoSaldo + " | Limite: " + limite);
-				} else if (valor - saldo > limite) {
-					System.out.println("Movimentação negada. Seu limite é de apenas 1000 reais");
-				} else if (valor - saldo <= limite) {
-//					System.out.println("----Limite: " + limite);
-//					System.out.println("----Saldo: " + saldo);
-					double novoLimite = movimento.usarLimite(valor);
-					saldo = 0;
-					limite = novoLimite;
-				}
-
-			// CREDITO
-			} else if (op.equals("c")) {
-				System.out.println("Saldo: " + saldo + " | Limite: " + limite);
-				System.out.println("1 - CREDITO");
-				System.out.println("Digite o valor a creditar");
-				int valor = sc.nextInt();
-				double saldoNovo = movimento.credito(valor);
-				System.out.println("Saldo atual: " + saldoNovo + " | Limite atual: " + limite);
-				saldo = saldoNovo;
-
-			} else if (op != "d" && op != "c") {
-				System.out.print("Digite \'C'\" ou \'D'\": ");
-			}
-
-			// CONTINUAR OU SAIR
-			System.out.println();
-			System.out.println("--------------");
-			System.out.println();
-			System.out.print("Continuar S/N: ");
-			continuar = sc.next().trim().toLowerCase().substring(0, 1);
-
-			contador++;
-			if (contador > 10) {
-				break;
-			}
-
-		} while (continuar.equalsIgnoreCase("s"));
+		ctEspecial.movimento(sc, ctEspecial);
 
 	}
 
 	private static void contaCorrente(Scanner sc) {
 		ContaCorrente cc = new ContaCorrente(0, null);
-		
+
 		int contador = 1;
 		String continuar;
-		
-		System.out.println("BANCO MUNDIAL G7 \n"
-				+ "Simplificando sua vida \n"
-					+ "\n"
-					+ "CONTA CORRENTE"
-					+ "\n"
-					+ "Saldo: " + cc.getSaldo()
-				);
-		
-		//INSERÇÃO DE DADOS REFERENTE A DÉBITO E CRÉDITO
+
+		System.out.println("BANCO MUNDIAL G7 \n" + "Simplificando sua vida \n" + "\n" + "CONTA CORRENTE" + "\n"
+				+ "Saldo: " + cc.getSaldo());
+
+		// INSERÇÃO DE DADOS REFERENTE A DÉBITO E CRÉDITO
 		do {
 			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
 			String op = sc.next().trim().toLowerCase().substring(0, 1);
@@ -248,23 +197,42 @@ public class App {
 			if (contador > 10) {
 				break;
 			}
-			
+
 		} while (continuar.equalsIgnoreCase("s"));
-		
-		//ESCOLHA NA OPÇÃO DE QUERER OU NÃO OS CHEQUES
+
+		// ESCOLHA NA OPÇÃO DE QUERER OU NÃO OS CHEQUES
 		System.out.print("\n Você possui até 3 cheques disponíveis liberados! Deseja solicitar? (S/N)");
 		continuar = sc.next().trim().substring(0, 1);
-		
-		//INPUT PARA A CONDIÇÃO DO MÉTODO
-			if (continuar.equalsIgnoreCase("s")) {
-				System.out.print("\n Quantidade de cheques: ");
-				cc.contadorTalao = sc.nextInt();
-				cc.liberaCheque();
-				};
-		
-		//RETORNO COM O CÁLCULO DOS INPUTS DÉBITO E CRÉDITO COM A DIFERENÇA DA ESCOLHA
+
+		// INPUT PARA A CONDIÇÃO DO MÉTODO
+		if (continuar.equalsIgnoreCase("s")) {
+			System.out.print("\n Quantidade de cheques: ");
+			cc.contadorTalao = sc.nextInt();
+			cc.liberaCheque();
+		}
+		;
+
+		// RETORNO COM O CÁLCULO DOS INPUTS DÉBITO E CRÉDITO COM A DIFERENÇA DA ESCOLHA
 		System.out.println("Saldo:" + cc.getSaldo());
-	
-}
+
 	}
 
+	private static void contaPoupanca(Scanner sc) {
+
+		int num = setNum(sc);
+		String cpf = setCpf(sc);
+
+		System.out.println("Digite o dia de criacao de conta: ");
+		int diaAniversario = sc.nextInt();
+
+		ContaPoupanca ctPoupanca = new ContaPoupanca(num, cpf, diaAniversario);
+
+		ContaPoupanca ctPoupanca = new ContaPoupanca(num, cpf, diaAniversario, true);
+
+		ctPoupanca.tipoConta();
+
+		ctPoupanca.movimento(sc, ctPoupanca);
+
+	}
+
+}
