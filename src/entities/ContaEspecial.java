@@ -17,62 +17,78 @@ public class ContaEspecial extends Conta {
 		return limite;
 	}
 
-	public void setLimite(double limite) {
-		ContaEspecial.limite = limite;
-	}
-
-////	@Override
-//	public void debito (double valor) {
-//			this.setSaldo(this.getSaldo() - valor);
-//	}
-
 	// METHOD MOVIMENTO
 	public void movimento(Scanner sc, ContaEspecial ctEspecial) {
-		String continuar;
+		String continuar = "";
 		int contador = 1;
+		String op = "";
 
 		do {
-			System.out.print("\n" + contador + "- Movimento \'D'\" débito ou \'C'\" crédito: ");
+			
+			do {
+				System.out.print("\n" + contador + "- Movimento \'D' débito ou \'C' crédito: ");
+				op = sc.next().trim().toLowerCase().substring(0, 1);
 
-			String op = sc.next().trim().toLowerCase().substring(0, 1);
+				// DEBITO
+				if (op.equals("d")) {
+					System.out.println("Digite o valor a debitar: "); 
+					double debito = sc.nextInt();
 
-			// DEBITO
-			if (op.equals("d")) {
-				System.out.println("Digite o valor a debitar: ");
-				double debito = sc.nextInt();
+					if (debito < getSaldo()) {
+						ctEspecial.debito(debito);
+						System.out.println("Saldo: " + getSaldo() + " | Limite mensal: " + getLimite());
 
-				if (debito < getSaldo()) {
-					ctEspecial.debito(debito);
-					System.out.println("Saldo: " + getSaldo() + " | Limite mensal: " + getLimite());
+					} else if (debito - getSaldo() <= getLimite()) {
+						
+						//VERIFICACAO DE SALDO APOS 10 MOVIMENTOS
+						if (contador == 10 && getSaldo() - debito < 0) {
+							System.out.println("Apos seus 10 movimentos, seu saldo nao pode ficar negativo!");
+							break;
+						}
+						
+						double novoLimite = ctEspecial.usarLimite(debito, ctEspecial);
+						limite = novoLimite;
 
-				} else if (debito - getSaldo() > getLimite()) {
-					System.out.println("Movimentação negada. Seu limite esta em " + getLimite()
-							+ "reais e seu saldo esta em: " + getSaldo() + "reais");
+					} else if (debito - getSaldo() > getLimite()) {
+						System.out.println("Movimentação negada. Seu limite esta em " + getLimite()
+								+ "reais e seu saldo esta em: " + getSaldo() + "reais");
+					}
 
-				} else if (debito - getSaldo() <= getLimite()) {
-					double novoLimite = ctEspecial.usarLimite(debito, ctEspecial);
-					limite = novoLimite;
+				// CREDITO
+				} else if (op.equals("c")) {
+					System.out.println("Digite o valor a creditar: ");
+					int credito = sc.nextInt();
+					
+					//VERIFICACAO DE SALDO APOS 10 MOVIMENTOS
+					if (contador == 10 && getSaldo() + credito < 0) {
+						System.out.println("Apos seus 10 movimentos, seu saldo nao pode ficar negativo!");
+						break;
+					}
+					
+					ctEspecial.credito(credito);
+					System.out.println("Saldo atual: " + getSaldo() + " | Limite mensal: " + getLimite());
+
+				} else if (op != "d" && op != "c") {
+					System.out.print("\nErro! Informe \'D'ou \'C'!");
+				}
+				
+				contador ++;
+
+			} while (!op.equals("d") && !op.equals("c"));
+
+			do {
+				System.out.print("\nContinuar S/N: ");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
+
+				if (!continuar.equals("s") && !continuar.equals("n")) {
+					System.out.print("\nErro! Informe \'S' ou \'N'!");
 				}
 
-			// CREDITO
-			} else if (op.equals("c")) {
-				System.out.println("Digite o valor a creditar: ");
-				int credito = sc.nextInt();
-				ctEspecial.credito(credito);
-				System.out.println("Saldo atual: " + getSaldo() + " | Limite mensal: " + getLimite());
+			} while (!continuar.equals("s") && !continuar.equals("n"));
 
-			} else if (op != "d" && op != "c") {
-				System.out.print("Digite \'C'\" ou \'D'\": ");
-			}
-
-			System.out.print("\nContinuar S/N: ");
-			continuar = sc.next().trim().toLowerCase().substring(0, 1);
-
-			contador++;
-
-			if (contador >= 10 && getSaldo()<0 ){
-				System.out.println("Apos 10 movimentacoes o saldo nao pode ser negativo!");
-				System.out.println("Saldo atual: " + getSaldo() + " | Limite mensal: " + getLimite());
+			if (contador > 10) {
+				System.out.println("Voce atingiu seus 10 movimentos! Sistema encerrado");
+				break;
 			}
 
 		} while (continuar.equalsIgnoreCase("s"));
@@ -82,9 +98,10 @@ public class ContaEspecial extends Conta {
 	public double usarLimite(double valor, ContaEspecial ctEspecial) {
 
 		double novoLimite = getLimite() - (valor - getSaldo());
-		ctEspecial.debito(getSaldo());
+		ctEspecial.debito(valor);
 
-		System.out.println("Voce esta utilizando seu limite | Saldo atual: " + valor + " | Limite mensal: " + novoLimite);
+		System.out
+				.println("Voce esta utilizando seu limite | Saldo atual: " + valor + " | Limite mensal: " + novoLimite);
 		System.out.println("\nDebito concluido!");
 		System.out.println("Saldo final: " + getSaldo() + " | Limite mensal: " + novoLimite);
 

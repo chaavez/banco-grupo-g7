@@ -57,7 +57,7 @@ public class BancoMundialG7 {
 				break;
 
 			case 3:
-				// contaEspecial();
+				acessarContaEspecial();
 				break;
 
 			case 4:
@@ -162,5 +162,33 @@ public class BancoMundialG7 {
 
 	}
 
+	public void acessarContaEspecial() {
+		
+		double limite = contaEspecial.getLimite();
+		
+		if (contaEspecial == null) {
+			int numero = setNum();
+			String cpf = setCpf();
+			contaEspecial = new ContaEspecial(numero, cpf, limite);
+		}
+		if (!contaEspecial.isAtivo()) {
+			System.out.println("Sua conta está inativa, deseja ativar?");
+			System.out.print("S/N: ");
+			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
+			if (ativacao.equals("s")) {
+				contaEspecial.setAtivo(true);
+			} else if (ativacao.equals("n")) {
+				menu();
+			}
+		}
+
+		//VALORES INICIAIS CLIENTE
+		double saldo = contaEspecial.getSaldo();
+		System.out.println("\nSaldo Inicial: " + saldo);
+		System.out.println("Limite Inicial: " + limite);
+		
+		contaEspecial.movimento(scanner, contaEspecial);
+		
+	}
 	// DEMAIS CONTAS
 }
