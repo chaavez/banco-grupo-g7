@@ -96,8 +96,9 @@ public class BancoMundialG7 {
 		System.out.println("Simplificando sua vida\n\n");
 	}
 
-	private void acessarContaEmpresa() {
+private void acessarContaEmpresa() {
 
+		
 		int contador = 1;
 		String continuar = "";
 		String op = "";

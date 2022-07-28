@@ -20,28 +20,14 @@ public class ContaEmpresa extends Conta {
 	}
 
 	@Override
-	public void debito(double valor) {
+	public void debito(double valor) {		
 
-		double saldo = getSaldo();
-
-		if (valor <= saldo) {
-			saldo -= valor;
+		if (valor <= getSaldo()) {
+			super.debito(valor);			
 		} else {
 			System.out.println("Operação Inválida!");
 		}
-	}
-
-	@Override
-	public void credito(double valor) {
-
-		double saldo = getSaldo();
-
-		if (valor > 0) {
-			saldo += valor;
-		} else {
-			System.out.println("Operação Inválida!");
-		}
-	}
+	}	
 
 	// método soma no saldo e tira do empréstimo
 	public void pedirEmprestimo(Double valor) {
@@ -50,9 +36,9 @@ public class ContaEmpresa extends Conta {
 			emprestimoEmpresa -= valor;
 			credito(valor);
 			System.out.println("Empréstimo efetivado!");
+			mostrarSaldo();
 		} else {
 			System.out.println("Empréstimo não realizado!");
-
 		}
 
 	}
@@ -80,12 +66,14 @@ public class ContaEmpresa extends Conta {
 		System.out.print("Valor movimento: R$");
 		double valor = sc.nextDouble();
 		debito(valor);
+		mostrarSaldo();
 	}
 
 	public void creditar(String op, Scanner sc) {
 		System.out.print("Valor movimento: R$");
 		double valor = sc.nextDouble();
 		credito(valor);
+		mostrarSaldo();
 	}
 
 	public String oferecerEmprestimo(String continuar, Scanner sc) {
