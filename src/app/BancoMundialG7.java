@@ -49,7 +49,7 @@ public class BancoMundialG7 {
 
 			switch (opcao) {
 			case 1:
-				// contaPoupanca();
+				contaPoupanca();
 				break;
 
 			case 2:
@@ -172,7 +172,7 @@ public class BancoMundialG7 {
 			contaEspecial = new ContaEspecial(numero, cpf, limite);
 		}
 		if (!contaEspecial.isAtivo()) {
-			System.out.println("Sua conta está inativa, deseja ativar?");
+			System.out.println("Sua conta estï¿½ inativa, deseja ativar?");
 			System.out.print("S/N: ");
 			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
 			if (ativacao.equals("s")) {
@@ -188,6 +188,21 @@ public class BancoMundialG7 {
 		System.out.println("Limite Inicial: " + limite);
 		
 		contaEspecial.movimento(scanner, contaEspecial);
+		
+	}
+	
+	
+	private void contaPoupanca() {
+		
+		if (contaPoupanca == null) {
+			int numero = setNum();
+			String cpf = setCpf();
+			contaEmpresa = new ContaEmpresa(numero, cpf);
+		}
+		
+		contaPoupanca.tipoConta();
+		contaPoupanca.movimento(scanner, contaPoupanca);
+		menu();
 		
 	}
 	// DEMAIS CONTAS
