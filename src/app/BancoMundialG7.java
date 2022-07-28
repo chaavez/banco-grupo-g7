@@ -28,7 +28,7 @@ public class BancoMundialG7 {
 
 	// SET NUMERO DA CONTA
 	private int setNum() {
-		System.out.println("Digite seu numero: ");
+		System.out.println("Digite o numero da conta: ");
 		int numero = scanner.nextInt();
 
 		return numero;
@@ -36,7 +36,7 @@ public class BancoMundialG7 {
 
 	// SET CPF CONTA
 	private String setCpf() {
-		System.out.println("Digite seu cpf: ");
+		System.out.println("Digite seu cpf ou cnpj: ");
 		String cpf = scanner.next();
 
 		return cpf;
@@ -71,7 +71,7 @@ public class BancoMundialG7 {
 				break;
 
 			case 4:
-				contaEmpresa();
+				acessarContaEmpresa();
 				break;
 
 			case 5:
@@ -96,57 +96,62 @@ public class BancoMundialG7 {
 		System.out.println("Simplificando sua vida\n\n");
 	}
 
-	private void contaEmpresa() {
+	private void acessarContaEmpresa() {
 
 		int contador = 1;
-		String continuar;
+		String continuar = "";
+		String op = "";
 
 		cabecalho();
-		System.out.println();
-		System.out.println("CONTA EMPRESA");
-		System.out.println("Saldo Atual:" + contaEmpresa.getSaldo());
+		contaEmpresa.mostrarNomeConta();
 
 		do {
-			System.out.print("Movimento 'D' dÃ©bito ou 'C' crÃ©dito: ");
-			String op = scanner.next().trim().toLowerCase().substring(0, 1);
 
-			if (op.equals("d")) {
-				System.out.print("Valor movimento: R$");
-				double valor = scanner.nextDouble();
-				contaEmpresa.debito(valor);
+			do {
+				op = contaEmpresa.mostrarOpcaoDebitoCredito(scanner);
 
-			} else if (op.equals("c")) {
-				System.out.print("Valor movimento: R$");
-				double valor2 = scanner.nextDouble();
-				contaEmpresa.credito(valor2);
+				if (op.equals("d")) {
+					contaEmpresa.debitar(op, scanner);
 
-			} else if (op != "d" && op != "c") {
-				System.out.print("Digite 'C' ou 'D': ");
-			}
+				}
+				if (op.equals("c")) {
+					contaEmpresa.creditar(op, scanner);
 
-			System.out.print("Continuar S/N: ");
-			continuar = scanner.next().trim().toLowerCase().substring(0, 1);
-
-			contador++;
-			if (contador > 10 || continuar.equalsIgnoreCase("N")) {
-				System.out.print("Vc topa um emprestimo? Vc tem R$" + contaEmpresa.getEmprestimoEmpresa()
-						+ " liberado!!! Vai pegar quanto? S/N?");
-				continuar = scanner.next().trim().substring(0, 1);
-				contador = 1;
-
-				if (continuar.equalsIgnoreCase("S")) {
-					System.out.print("Valor do Emprestimo: ");
-					double valorEmprestimo = scanner.nextDouble();
-					contaEmpresa.pedirEmprestimo(valorEmprestimo);
+				}
+				if (!op.equals("d") && !op.equals("c")) {
+					contaEmpresa.exibirErroDigitacao();
 				}
 
+			} while (!op.equals("d") && !op.equals("c"));
+
+			do {
 				System.out.print("Continuar S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
-			}
+				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar não
+				if (contador % 10 == 0 || continuar.equals("n")) {
+					do {
+						continuar = contaEmpresa.oferecerEmprestimo(continuar, scanner);
+					} while (!continuar.equals("s") && !continuar.equals("n"));
+
+					if (continuar.equals("s")) {
+						contaEmpresa.setarValorEmprestimo(scanner);
+					}
+
+					System.out.print("Continuar S/N: ");
+					continuar = scanner.next().trim().toLowerCase().substring(0, 1);
+				}
+
+				if (!continuar.equals("s") && !continuar.equals("n")) {
+					contaEmpresa.exibirErroDigitacao();
+				}
+				contador++;
+
+			} while (!continuar.equals("s") && !continuar.equals("n"));
 
 		} while (continuar.equalsIgnoreCase("s"));
-		System.out.println("Saldo Atual:" + contaEmpresa.getSaldo());
+		contaEmpresa.mostrarSaldo();
+		System.out.println();
 
 		menu();
 
