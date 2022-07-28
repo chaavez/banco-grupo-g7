@@ -16,16 +16,6 @@ public class BancoMundialG7 {
 	private ContaEspecial contaEspecial;
 	private ContaEstudantil contaEstudantil;
 
-	public void criarContas() {
-		int numero = setNum();
-		String cpf = setCpf();
-		//contaPoupanca = new ContaPoupanca(numero, cpf, 1, false);
-		contaCorrente = new ContaCorrente(numero, cpf);
-		contaEmpresa = new ContaEmpresa(numero, cpf);
-		contaEspecial = new ContaEspecial(numero, cpf, 1);
-		contaEstudantil = new ContaEstudantil(numero, cpf);
-	}
-
 	// SET NUMERO DA CONTA
 	private int setNum() {
 		System.out.println("Digite o numero da conta: ");
@@ -59,15 +49,15 @@ public class BancoMundialG7 {
 
 			switch (opcao) {
 			case 1:
-				//contaPoupanca();
+				// contaPoupanca();
 				break;
 
 			case 2:
-				//contaCorrente();
+				// contaCorrente();
 				break;
 
 			case 3:
-				//contaEspecial();
+				// contaEspecial();
 				break;
 
 			case 4:
@@ -75,7 +65,7 @@ public class BancoMundialG7 {
 				break;
 
 			case 5:
-				//contaEstudantil();
+				// contaEstudantil();
 				break;
 
 			default:
@@ -96,9 +86,23 @@ public class BancoMundialG7 {
 		System.out.println("Simplificando sua vida\n\n");
 	}
 
-private void acessarContaEmpresa() {
+	private void acessarContaEmpresa() {
+		if (contaEmpresa == null) {
+			int numero = setNum();
+			String cpf = setCpf();
+			contaEmpresa = new ContaEmpresa(numero, cpf);
+		}
+		if (!contaEmpresa.isAtivo()) {
+			System.out.println("Sua conta estÃ¡ inativa, deseja ativar?");
+			System.out.print("S/N: ");
+			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
+			if (ativacao.equals("s")) {
+				contaEmpresa.setAtivo(true);
+			} else if (ativacao.equals("n")) {
+				menu();
+			}
+		}
 
-		
 		int contador = 1;
 		String continuar = "";
 		String op = "";
@@ -129,7 +133,7 @@ private void acessarContaEmpresa() {
 				System.out.print("Continuar S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
-				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar não
+				// oferecer emprï¿½stimo apï¿½s 10 movimentos ou se o usuï¿½rio escolher continuar nï¿½o
 				if (contador % 10 == 0 || continuar.equals("n")) {
 					do {
 						continuar = contaEmpresa.oferecerEmprestimo(continuar, scanner);
@@ -157,7 +161,6 @@ private void acessarContaEmpresa() {
 		menu();
 
 	}
-	
+
 	// DEMAIS CONTAS
 }
-
