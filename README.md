@@ -6,3 +6,4 @@
 <p> Desenvolvedores: Amanda, Anderson, Barbara, Debora, Herick e Sandro </p>
 <p> Projeto Integrador da turma 07.2022 Code Tank Java da DigitalHouse e Empiricus </p>
 
+![Logo do Banco Mundial G7](url da imagem gerado pelo serviço de hospedagem ou GitHub)
