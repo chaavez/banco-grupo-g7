@@ -1,5 +1,5 @@
 <p align="center"> 
-<img src="https://github.com/chaavez/banco-grupo-g7/blob/984607581e963d320d48f24d30a073c23330a7dc/1bf58146-3d06-42e0-97b4-5419a2ae4f37.png" width="150px">
+<img src="https://user-images.githubusercontent.com/104176853/181657069-1184aea2-6d1d-4318-adc4-d94ca4dc1883.png" width="150px">
 </p>
 <h1 align="center"> Banco Mundial G7 </h1>
 <p align="center"> Simplificando sua vida </p>
