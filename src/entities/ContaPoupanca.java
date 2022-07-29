@@ -20,7 +20,7 @@ public class ContaPoupanca extends Conta{
 	}
 
 	///// TIPO CONTA /////
-	public void tipoConta() {
+	public void mostrarTipoConta() {
 		System.out.println();
 		System.out.println("CONTA POUPANÇA");
 		System.out.println();
@@ -54,7 +54,7 @@ public class ContaPoupanca extends Conta{
 	}	
 	
 	///// METODO PARA REGISTRO DOS MOVIMENTOS /////
- 	public void movimento(Scanner sc, ContaPoupanca ctPoupanca) {
+ 	public void movimentar(Scanner sc, ContaPoupanca ctPoupanca) {
 		String continuar;
 		int contador = 1;
 		String confirma;
@@ -79,7 +79,7 @@ public class ContaPoupanca extends Conta{
 					} else {
 						System.out.println("Operação cancelada!");
 					}
-					ctPoupanca.tipoConta();
+					ctPoupanca.mostrarTipoConta();
 		
 				///// CREDITO
 				} else if (op.equals("c")) {
@@ -93,7 +93,7 @@ public class ContaPoupanca extends Conta{
 					} else {
 						System.out.println("Operação cancelada!");
 					}
-					ctPoupanca.tipoConta();
+					ctPoupanca.mostrarTipoConta();
 	
 		
 				} else if (!op.equals("d") && !op.equals("c")) {

@@ -200,11 +200,11 @@ public class BancoMundialG7 {
 		if (contaPoupanca == null) {
 			int numero = setNum();
 			String cpf = setCpf();
-			contaEmpresa = new ContaEmpresa(numero, cpf);
+			contaPoupanca = new ContaPoupanca(numero, cpf);
 		}
 		
-		contaPoupanca.tipoConta();
-		contaPoupanca.movimento(scanner, contaPoupanca);
+		contaPoupanca.mostrarTipoConta();
+		contaPoupanca.movimentar(scanner, contaPoupanca);
 		menu();
 		
 	}
