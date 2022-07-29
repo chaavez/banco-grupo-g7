@@ -161,7 +161,6 @@ public class BancoMundialG7 {
 		contaEmpresa.mostrarSaldo();
 		System.out.println();
 
-		menu();
 
 	}
 
@@ -293,8 +292,6 @@ public class BancoMundialG7 {
 					}
 				}
 		} while (opcaoEstudantil != 6);
-
-		menu();
 
 	}
 }
