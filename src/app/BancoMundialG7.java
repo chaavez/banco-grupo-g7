@@ -233,5 +233,68 @@ public class BancoMundialG7 {
 				System.out.println("Saldo: R$ " + contaCorrente.getSaldo());
 	}
 	
-	// DEMAIS CONTAS
+	private void acessarContaEstudantil() {
+		if (contaEstudantil == null) {
+			contaEstudantil = new ContaEstudantil(setNum(), setCpf());
+			contaEstudantil.setStatusConta(!contaEstudantil.isStatusConta());
+		}
+		if (!contaEstudantil.isStatusConta()) {
+			System.out.println("Sua conta está inativa, deseja ativar esta Conta? \nS(SIM) ou N(NÃO): ");
+			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
+			if (ativacao.equals("s")) {
+				contaEstudantil.setStatusConta(!contaEstudantil.isStatusConta());
+				} else if (ativacao.equals("n")) {
+					menu();
+				}
+		}
+						
+		int opcaoEstudantil;
+		
+		do {
+			contaEstudantil.verificaContador();
+			cabecalho();
+			contaEstudantil.mostrarNomeConta();
+			System.out.println("MENU DE OPÇÕES");
+			System.out.println("[1] - FAZER PAGAMENTO");
+			System.out.println("[2] - FAZER DEPOSITO");
+			System.out.println("[3] - SOLICITAR EMPRÉSTIMO");
+			System.out.println("[4] - PAGAR EMPRÉSTIMO");
+			System.out.println("[5] - DESATIVAR CONTAR");
+			System.out.println("[6] - SAIR");
+			System.out.print("Escolha a opção: ");
+			opcaoEstudantil = scanner.nextInt();
+
+			switch (opcaoEstudantil) {
+				case 1:
+					contaEstudantil.debitar(scanner);
+					break;
+
+				case 2:
+					contaEstudantil.creditar(scanner);
+					break;
+
+				case 3:
+					contaEstudantil.setarValorEmprestimo(scanner);
+					break;
+
+				case 4:
+					contaEstudantil.pagarEmprestimo();
+					break;
+
+				case 5:
+					contaEstudantil.setStatusConta(!contaEstudantil.isStatusConta());
+					menu();
+					break;
+
+				default:
+					if (opcaoEstudantil != 6) {
+						System.out.println("\nOpção inválida!");
+						System.out.println("Escolha uma opção na lista!");
+					}
+				}
+		} while (opcaoEstudantil != 6);
+
+		menu();
+
+	}
 }
