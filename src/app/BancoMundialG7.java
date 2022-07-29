@@ -226,8 +226,8 @@ public class BancoMundialG7 {
 		}
 		
 		cabecalho();
-		contaCorrente.preenchimento();
-		contaCorrente.resultado();
+		contaCorrente.preencherDados();
+		contaCorrente.mostrarResultado();
 	}
 	
 	private void acessarContaEstudantil() {

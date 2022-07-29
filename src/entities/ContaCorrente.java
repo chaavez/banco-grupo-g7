@@ -6,35 +6,28 @@ import java.util.Scanner;
 
 public class ContaCorrente extends Conta {
 	Scanner sc = new Scanner(System.in);
-	
-	//CONSTRUTOR
+
+	// CONSTRUTOR
 	public ContaCorrente(int numero, String cpf) {
 		super(numero, cpf);
 	}
 
-	public int contadorTalao = 1;
-	
+	public int contadorTalao = 3;
+
 	// GETTERS AND SETTERS
 	public int getContadorTalao() {
 		return contadorTalao;
 	}
-	public void setContadorTalao(int contadorTalao) {
-		this.contadorTalao = contadorTalao;
-	}
-	
-	//MOSTRAR RESULTADO
 
-	
-	//MÉTODO PARA PREENCHIMENTO DE INFO
-	
-	public void preenchimento() {
+	// MÉTODO PARA PREENCHIMENTO DE INFO
+
+	public void preencherDados() {
 		double saldo = this.getSaldo();
-		
+
 		int contador = 1;
 		String continuar;
-		
-		System.out.println("CONTA CORRENTE" + "\n"
-				+ "Saldo Atual: " + saldo);
+
+		System.out.println("CONTA CORRENTE" + "\n" + "Saldo Atual: " + saldo);
 
 		// INSERÇÃO DE DADOS REFERENTE A DÉBITO E CRÉDITO
 		do {
@@ -44,12 +37,12 @@ public class ContaCorrente extends Conta {
 			if (op.equals("d")) {
 				System.out.print("Valor movimento - débito: R$");
 				double valor = sc.nextDouble();
-				
-					if (valor <= saldo) {
-						super.debito(valor);			
-					} else {
-						System.out.println("Operação Inválida!");
-					}
+
+				if (valor <= saldo) {
+					super.debito(valor);
+				} else {
+					System.out.println("Operação Inválida!");
+				}
 
 			} else if (op.equals("c")) {
 				System.out.print("Valor movimento - crédito: R$");
@@ -58,7 +51,7 @@ public class ContaCorrente extends Conta {
 
 			} else if (op != "d" && op != "c") {
 				System.out.print("Digite \'C'\" ou \'D'\": ");
-				preenchimento();
+				preencherDados();
 			}
 
 			System.out.print("Continuar S/N: ");
@@ -70,84 +63,64 @@ public class ContaCorrente extends Conta {
 			}
 
 		} while (continuar.equalsIgnoreCase("s"));
-		
-		//CONDIÇÃO PARA SER LIBERADO OS CHEQUES
-		
-		if (this.getSaldo() >= 30) {
-			
-			// OPÇÃO DE QUERER OU NÃO OS CHEQUES
-			
-			System.out.print("\n Você possui até 3 cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
-			continuar = sc.next().trim().toLowerCase().substring(0, 1);
 
-			if (continuar.equalsIgnoreCase("s")) {
-				
-				liberaCheque();
+		// CONDICIONAL PARA LIBERAÇÃO DE CÓDIGO
+
+		while (contadorTalao >= 1) {
+			if (getSaldo() > 90) {
+				int qtCheque;
+				System.out.println("\n Você possui " + contadorTalao
+						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
+				if (continuar.equalsIgnoreCase("s")) {
+					System.out.println("Você deseja quantos talões?");
+					qtCheque = sc.nextInt();
+					liberarCheque(qtCheque);
+					System.out.println("Talão resgatado!");
+					return;
+				} else {
+					return;
+				}
+			} else if (getSaldo() > 60) {
+				int qtCheque;
+				System.out.println("\n Você possui " + contadorTalao
+						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
+				if (continuar.equalsIgnoreCase("s")) {
+					System.out.println("Você deseja quantos talões?");
+					qtCheque = sc.nextInt();
+					liberarCheque(qtCheque);
+					System.out.println("Talão resgatado!");
+					return;
+				} else {
+					return;
+				}
+			} else if (getSaldo() > 30) {
+				int qtCheque = 1;
+				System.out.println("\n Você possui " + contadorTalao
+						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+				continuar = sc.next().trim().toLowerCase().substring(0, 1);
+				if (continuar.equalsIgnoreCase("s")) {
+					liberarCheque(qtCheque);
+					System.out.println("Talão resgatado!");
+					return;
+				} else {
+					return;
+				}
 			}
 		}
-	}
-	
-	//METODO PARA DESCONTO DO TALAO
-	public double desconto() {
-		return getSaldo() - (contadorTalao*30);
-		
-	}
-	
-	//MÉTODO PARA LIBERAR OS CHEQUES 
-	public double liberaCheque() {
-		
-		
-		System.out.print("\n Quantidade de cheques: ");
-		contadorTalao = sc.nextInt();
-		
-		//LAÇO PARA OPÇÕES		
-		
-		if (contadorTalao <= 3) {
-				desconto();
-				String continuar;
-				
-					if(contadorTalao == 1 && this.getSaldo() < 60 ) {
-						System.out.println("Você solicitou " + contadorTalao + " cheque.");
-						System.out.println("\n Você atingiu o valor máximo da sua conta para o cheque.");
-												
-					} else if (contadorTalao == 2 && this.getSaldo() < 90) {
-						System.out.println("Você solicitou " + contadorTalao + " cheques.");
-						System.out.println("\n Você atingiu o valor máximo da sua conta para o cheque.");
-												
-					} else if(contadorTalao == 3 && this.getSaldo() >= 90) {
-						System.out.println("Você solicitou " + contadorTalao + " cheques.");
-						System.out.println("\n Você atingiu a quantidade máxima de solicitação de cheques.");
-												
-					} else if (contadorTalao == 1 && this.getSaldo() > 90) {
-						System.out.println("\n Você pode solicitar mais 2 cheques! \n Você deseja?");
-						continuar = sc.next().trim().toLowerCase().substring(0, 1);
-						
-					} else if (contadorTalao == 2 && this.getSaldo() > 90) {
-						System.out.println("\n Você pode solicitar mais 1 cheque! \n Você deseja?  (S/N)");
-						continuar = sc.next().trim().toLowerCase().substring(0, 1);
-						
-					}else {
-						System.out.println("Valores inferiores a  disponibilidade de cheques." +
-					"\n Deseja continuar? (S/N)");
-						continuar = sc.next().trim().toLowerCase().substring(0, 1);
-							if (continuar.equalsIgnoreCase("s")) {
-							liberaCheque(); 
-							}
-					
-					}
-					
-			} else {
-				System.out.println("\n Esta quantidade não é válida! Tente novamente. ");
-				return liberaCheque(); 
-			}
-		
-		return desconto();
-			
-		}
 
-	//RESULTADO
-	public void resultado(){
-		System.out.println("Saldo Atual:" + desconto() + " teste: "+ getSaldo());
 	}
-	
+
+	// METODO PARA DESCONTO DO TALAO
+	public void liberarCheque(int ctTalao) {
+		contadorTalao -= ctTalao;
+		debito(30 * ctTalao);
 	}
+
+	// METODO PARA RESULTADO
+	public void mostrarResultado() {
+		System.out.println("Saldo Atual:" + getSaldo());
+	}
+
+}
