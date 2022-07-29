@@ -53,7 +53,7 @@ public class BancoMundialG7 {
 				break;
 
 			case 2:
-				// contaCorrente();
+				acessarContaCorrente();
 				break;
 
 			case 3:
@@ -205,5 +205,30 @@ public class BancoMundialG7 {
 		menu();
 		
 	}
+	
+	private void acessarContaCorrente() {
+		if (contaCorrente == null) {
+			int numero = setNum();
+			String cpf = setCpf();
+			contaCorrente = new ContaCorrente(numero, cpf);
+		}
+		if (!contaCorrente.isAtivo()) {
+			System.out.println("Sua conta está inativa, deseja ativar?");
+			System.out.print("S/N: ");
+			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
+			if (ativacao.equals("s")) {
+				contaCorrente.setAtivo(true);
+			} else if (ativacao.equals("n")) {
+				menu();
+			}
+		}
+		
+		cabecalho();
+		contaCorrente.preenchimento();
+		
+		// RETORNO
+				System.out.println("Saldo: R$ " + contaCorrente.getSaldo());
+	}
+	
 	// DEMAIS CONTAS
 }
