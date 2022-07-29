@@ -65,7 +65,7 @@ public class BancoMundialG7 {
 				break;
 
 			case 5:
-				// contaEstudantil();
+				acessarContaEstudantil();
 				break;
 
 			default:
@@ -280,8 +280,10 @@ public class BancoMundialG7 {
 					break;
 
 				case 5:
-					contaEstudantil.setStatusConta(!contaEstudantil.isStatusConta());
-					menu();
+					contaEstudantil.desativarConta();
+					if (!contaEstudantil.isStatusConta()) {
+						menu();
+					}
 					break;
 
 				default:

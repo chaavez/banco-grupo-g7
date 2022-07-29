@@ -104,7 +104,7 @@ public class ContaEstudantil extends Conta {
 	public void setarValorEmprestimo(Scanner sc) {
 		System.out.printf("Valor pré-aprovado para empréstimo: ");
 		System.out.printf("R$%.2f", emprestimoDisponivel);
-		System.out.print("\nValor do Emprestimo: ");
+		System.out.print("\nValor do Emprestimo: R$");
 		double valorEmprestimo = sc.nextDouble();
 		SolicitarEmprestimoEstudantil(valorEmprestimo);
 	}
@@ -134,5 +134,17 @@ public class ContaEstudantil extends Conta {
 				System.out.println("Opção inválida!");
 			}
 		}while(op != "n");
+	}
+	
+	public void desativarConta() {
+		if (emprestimoDisponivel == 5000) {
+			if (getSaldo() == 0) {
+				setStatusConta(!isStatusConta());
+			} else{
+				System.out.println("A conta não pode ser desativada com saldo!\n\n");
+			}
+		} else{
+			System.out.println("Existe empréstimo ativo nessa conta!\n\n");
+		}
 	}
 }
