@@ -133,14 +133,14 @@ public class BancoMundialG7 {
 				System.out.print("Continuar S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
-				// oferecer empr�stimo ap�s 10 movimentos ou se o usu�rio escolher continuar n�o
+				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar não
 				if (contador % 10 == 0 || continuar.equals("n")) {
 					do {
 						continuar = contaEmpresa.oferecerEmprestimo(continuar, scanner);
 					} while (!continuar.equals("s") && !continuar.equals("n"));
 
-					if (continuar.equals("s")) {
-						contaEmpresa.setarValorEmprestimo(scanner);
+					if (continuar.equals("s")) {						
+						contaEmpresa.setarValorEmprestimo(scanner);						
 					}
 
 					System.out.print("Continuar S/N: ");

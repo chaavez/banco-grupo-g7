@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class ContaEmpresa extends Conta {
 
-	// limite de empréstimo 10 mil
-	private Double emprestimoEmpresa = 10000d;
+	// limite de emprÃ©stimo 10 mil
+	private Double emprestimoEmpresa = 10000.00;
 
 	Scanner sc = new Scanner(System.in);
 
@@ -25,23 +25,25 @@ public class ContaEmpresa extends Conta {
 		if (valor <= getSaldo()) {
 			super.debito(valor);			
 		} else {
-			System.out.println("Operação Inválida!");
+			System.out.println("OperaÃ§Ã£o InvÃ¡lida!");
 		}
 	}	
 
-	// método soma no saldo e tira do empréstimo
+	// mÃ©todo soma no saldo e tira do emprÃ©stimo
 	public void pedirEmprestimo(Double valor) {
-
+		
+		
 		if (valor > 0 && valor <= emprestimoEmpresa) {
 			emprestimoEmpresa -= valor;
 			credito(valor);
-			System.out.println("Empréstimo efetivado!");
+			System.out.println("EmprÃ©stimo efetivado!");
 			mostrarSaldo();
 		} else {
-			System.out.println("Empréstimo não realizado!");
-		}
+			System.out.println("EmprÃ©stimo nÃ£o realizado!");
+		}		
 
 	}
+		
 
 	public void mostrarNomeConta() {
 		System.out.println("CONTA EMPRESA");
@@ -49,28 +51,28 @@ public class ContaEmpresa extends Conta {
 	}
 
 	public void mostrarSaldo() {
-		System.out.printf("Saldo Atual: %.2f%n", getSaldo());
+		System.out.printf("Saldo atual: %.2f%n", getSaldo());
 	}
 
 	public String mostrarOpcaoDebitoCredito(Scanner sc) {
-		System.out.print("Movimento 'D' débito ou 'C' crédito: ");
+		System.out.print("Movimento: 'D' para dÃ©bito ou 'C' para crÃ©dito: ");
 		String op = sc.next().trim().toLowerCase().substring(0, 1);
 		return op;
 	}
 
 	public void exibirErroDigitacao() {
-		System.out.println("Erro! Informe um valor válido!");
+		System.out.println("Erro! Informe um valor vÃ¡lido!");
 	}
 
 	public void debitar(String op, Scanner sc) {
-		System.out.print("Valor movimento: R$");
+		System.out.print("Valor do dÃ©bito: R$");
 		double valor = sc.nextDouble();
 		debito(valor);
 		mostrarSaldo();
 	}
 
 	public void creditar(String op, Scanner sc) {
-		System.out.print("Valor movimento: R$");
+		System.out.print("Valor do crÃ©dito: R$");
 		double valor = sc.nextDouble();
 		credito(valor);
 		mostrarSaldo();
@@ -78,16 +80,17 @@ public class ContaEmpresa extends Conta {
 
 	public String oferecerEmprestimo(String continuar, Scanner sc) {
 
-		System.out.printf("Você tem R$%.2f %s%n", getEmprestimoEmpresa(), "liberado para empréstimo!!!");
-		System.out.print("Vai pegar quanto? S/N? ");
+		System.out.printf("VocÃª tem R$%.2f %s%n", getEmprestimoEmpresa(), "liberado para emprÃ©stimo!!!");
+		System.out.print("Vai pegar agora? S/N? ");
 		continuar = sc.next().trim().toLowerCase().substring(0, 1);
 		return continuar;
 	}
 
-	public void setarValorEmprestimo(Scanner sc) {
-		System.out.print("Valor do Emprestimo: ");
+	public void setarValorEmprestimo(Scanner sc) {		
+				
+		System.out.print("Valor do emprÃ©stimo: ");		
 		double valorEmprestimo = sc.nextDouble();
 		pedirEmprestimo(valorEmprestimo);
+		
 	}
-
 }
