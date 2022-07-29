@@ -31,7 +31,6 @@ public class ContaPoupanca extends Conta{
 	///// CONSTRUTOR CONTA POUPANCA /////
 	public ContaPoupanca(int numero, String cpf) {
 		super(numero, cpf);
-		//this.setAtivo(true);
 		this.setDiaAniversarioPoupanca(LocalDate.now().getDayOfMonth());
 	}	
 	
@@ -75,7 +74,7 @@ public class ContaPoupanca extends Conta{
 					confirma = sc.next().trim().toLowerCase().substring(0, 1);
 					if(confirma.equals("s") && debito >= 0) {
 						ctPoupanca.debito(debito);
-						System.out.println("Operação realizada!");
+						//System.out.println("Operação realizada!");
 					} else {
 						System.out.println("Operação cancelada!");
 					}
@@ -139,6 +138,14 @@ public class ContaPoupanca extends Conta{
 
  	}
 		
-		
+ 	@Override
+	public void debito(double valor) {		
+
+		if (valor <= getSaldo()) {
+			super.debito(valor);			
+		} else {
+			System.out.println("Operação Inválida!");
+		}
+	}	
 
 }

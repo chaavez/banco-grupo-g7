@@ -96,13 +96,15 @@ public class ContaCorrente extends Conta {
 					return;
 				}
 			} else if (getSaldo() > 30) {
-				int qtCheque = 1;
+				int qtCheque;
 				System.out.println("\n Você possui " + contadorTalao
 						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
 				continuar = sc.next().trim().toLowerCase().substring(0, 1);
 				if (continuar.equalsIgnoreCase("s")) {
+					System.out.println("Você deseja quantos talões?");
+					qtCheque = sc.nextInt();
 					liberarCheque(qtCheque);
-					System.out.println("Talão resgatado!");
+					//System.out.println("Talão resgatado!");
 					return;
 				} else {
 					return;
@@ -122,5 +124,14 @@ public class ContaCorrente extends Conta {
 	public void mostrarResultado() {
 		System.out.println("Saldo Atual:" + getSaldo());
 	}
+	@Override
+	public void debito(double valor) {		
+
+		if (valor <= getSaldo()) {
+			super.debito(valor);			
+		} else {
+			System.out.println("Saldo insuficiente");
+		}
+	}	
 
 }

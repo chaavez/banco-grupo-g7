@@ -130,7 +130,7 @@ public class BancoMundialG7 {
 			} while (!op.equals("d") && !op.equals("c"));
 
 			do {// Bloco referente a opção de empréstimo
-				System.out.print("Continuar S/N: ");
+				System.out.print("Continuar movimentação? S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
 				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
@@ -146,7 +146,7 @@ public class BancoMundialG7 {
 						contaEmpresa.setarValorEmprestimo();						
 					}
 
-					System.out.print("Continuar S/N: ");
+					System.out.print("Continuar movimentação? S/N: ");
 					continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 				}
 
