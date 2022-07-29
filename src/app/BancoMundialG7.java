@@ -110,37 +110,40 @@ public class BancoMundialG7 {
 		cabecalho();
 		contaEmpresa.mostrarNomeConta();
 
-		do {
+		do { //Bloco para execusão do aplictivo enquanto continuar for "s"
 
-			do {
-				op = contaEmpresa.mostrarOpcaoDebitoCredito(scanner);
+			do { // Bloco referente ao movimento de crédito ou débito
+				op = contaEmpresa.mostrarOpcaoDebitoCredito();
 
 				if (op.equals("d")) {
-					contaEmpresa.debitar(op, scanner);
+					contaEmpresa.debitar();
 
 				}
 				if (op.equals("c")) {
-					contaEmpresa.creditar(op, scanner);
+					contaEmpresa.creditar();
 
 				}
 				if (!op.equals("d") && !op.equals("c")) {
-					contaEmpresa.exibirErroDigitacao();
+					contaEmpresa.exibirErroDigitacaoDebitoCredito();
 				}
 
 			} while (!op.equals("d") && !op.equals("c"));
 
-			do {
+			do {// Bloco referente a opção de empréstimo
 				System.out.print("Continuar S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
-				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar não
+				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
 				if (contador % 10 == 0 || continuar.equals("n")) {
 					do {
-						continuar = contaEmpresa.oferecerEmprestimo(continuar, scanner);
+						if((!continuar.equals("s") && !continuar.equals("n"))) {
+							contaEmpresa.exibirErroDigitacaoSimNao();
+						}							
+						continuar = contaEmpresa.oferecerEmprestimo();												
 					} while (!continuar.equals("s") && !continuar.equals("n"));
 
 					if (continuar.equals("s")) {						
-						contaEmpresa.setarValorEmprestimo(scanner);						
+						contaEmpresa.setarValorEmprestimo();						
 					}
 
 					System.out.print("Continuar S/N: ");
@@ -148,7 +151,7 @@ public class BancoMundialG7 {
 				}
 
 				if (!continuar.equals("s") && !continuar.equals("n")) {
-					contaEmpresa.exibirErroDigitacao();
+					contaEmpresa.exibirErroDigitacaoSimNao();
 				}
 				contador++;
 

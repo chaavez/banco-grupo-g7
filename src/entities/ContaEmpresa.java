@@ -42,8 +42,7 @@ public class ContaEmpresa extends Conta {
 			System.out.println("Empréstimo não realizado!");
 		}		
 
-	}
-		
+	}		
 
 	public void mostrarNomeConta() {
 		System.out.println("CONTA EMPRESA");
@@ -54,43 +53,48 @@ public class ContaEmpresa extends Conta {
 		System.out.printf("Saldo atual: %.2f%n", getSaldo());
 	}
 
-	public String mostrarOpcaoDebitoCredito(Scanner sc) {
+	public String mostrarOpcaoDebitoCredito() {
 		System.out.print("Movimento: 'D' para débito ou 'C' para crédito: ");
 		String op = sc.next().trim().toLowerCase().substring(0, 1);
 		return op;
 	}
 
-	public void exibirErroDigitacao() {
-		System.out.println("Erro! Informe um valor válido!");
+	public void exibirErroDigitacaoDebitoCredito() {
+		System.out.println("Erro! Digite 'D' ou 'C'");
 	}
 
-	public void debitar(String op, Scanner sc) {
+	public void exibirErroDigitacaoSimNao() {
+		System.out.println("Erro! Digite 'S' para continuar ou 'N' para sair!");
+	}
+	
+	public void debitar() {
 		System.out.print("Valor do débito: R$");
 		double valor = sc.nextDouble();
 		debito(valor);
 		mostrarSaldo();
 	}
 
-	public void creditar(String op, Scanner sc) {
+	public void creditar() {
 		System.out.print("Valor do crédito: R$");
 		double valor = sc.nextDouble();
 		credito(valor);
 		mostrarSaldo();
 	}
 
-	public String oferecerEmprestimo(String continuar, Scanner sc) {
+	public String oferecerEmprestimo() {
 
 		System.out.printf("Você tem R$%.2f %s%n", getEmprestimoEmpresa(), "liberado para empréstimo!!!");
 		System.out.print("Vai pegar agora? S/N? ");
-		continuar = sc.next().trim().toLowerCase().substring(0, 1);
+		String continuar = sc.next().trim().toLowerCase().substring(0, 1);
 		return continuar;
 	}
 
-	public void setarValorEmprestimo(Scanner sc) {		
+	public void setarValorEmprestimo() {		
 				
 		System.out.print("Valor do empréstimo: ");		
 		double valorEmprestimo = sc.nextDouble();
 		pedirEmprestimo(valorEmprestimo);
 		
 	}
+	
 }
