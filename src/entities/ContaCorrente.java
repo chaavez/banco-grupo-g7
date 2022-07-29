@@ -22,6 +22,9 @@ public class ContaCorrente extends Conta {
 		this.contadorTalao = contadorTalao;
 	}
 	
+	//MOSTRAR RESULTADO
+
+	
 	//MÉTODO PARA PREENCHIMENTO DE INFO
 	
 	public void preenchimento() {
@@ -84,6 +87,11 @@ public class ContaCorrente extends Conta {
 		}
 	}
 	
+	//METODO PARA DESCONTO DO TALAO
+	public double desconto() {
+		return getSaldo() - (contadorTalao*30);
+		
+	}
 	
 	//MÉTODO PARA LIBERAR OS CHEQUES 
 	public double liberaCheque() {
@@ -92,30 +100,32 @@ public class ContaCorrente extends Conta {
 		System.out.print("\n Quantidade de cheques: ");
 		contadorTalao = sc.nextInt();
 		
-		//LAÇO PARA OPÇÔES		
+		//LAÇO PARA OPÇÕES		
 		
 		if (contadorTalao <= 3) {
-			
-			//Fazer o saldo pegar
-			this.saldo(this.getSaldo() - (contadorTalao*30));
-				
+				desconto();
 				String continuar;
 				
 					if(contadorTalao == 1 && this.getSaldo() < 60 ) {
 						System.out.println("Você solicitou " + contadorTalao + " cheque.");
-						System.out.println("\n Você atingiu o valor máximo da sua conta para o cheque.");						
+						System.out.println("\n Você atingiu o valor máximo da sua conta para o cheque.");
+												
 					} else if (contadorTalao == 2 && this.getSaldo() < 90) {
 						System.out.println("Você solicitou " + contadorTalao + " cheques.");
 						System.out.println("\n Você atingiu o valor máximo da sua conta para o cheque.");
+												
 					} else if(contadorTalao == 3 && this.getSaldo() >= 90) {
 						System.out.println("Você solicitou " + contadorTalao + " cheques.");
-						System.out.println("\n Você atingiu a quantidade máxima de solicitação de cheques.");			
+						System.out.println("\n Você atingiu a quantidade máxima de solicitação de cheques.");
+												
 					} else if (contadorTalao == 1 && this.getSaldo() > 90) {
 						System.out.println("\n Você pode solicitar mais 2 cheques! \n Você deseja?");
 						continuar = sc.next().trim().toLowerCase().substring(0, 1);
+						
 					} else if (contadorTalao == 2 && this.getSaldo() > 90) {
 						System.out.println("\n Você pode solicitar mais 1 cheque! \n Você deseja?  (S/N)");
 						continuar = sc.next().trim().toLowerCase().substring(0, 1);
+						
 					}else {
 						System.out.println("Valores inferiores a  disponibilidade de cheques." +
 					"\n Deseja continuar? (S/N)");
@@ -123,6 +133,7 @@ public class ContaCorrente extends Conta {
 							if (continuar.equalsIgnoreCase("s")) {
 							liberaCheque(); 
 							}
+					
 					}
 					
 			} else {
@@ -130,9 +141,13 @@ public class ContaCorrente extends Conta {
 				return liberaCheque(); 
 			}
 		
-		return contadorTalao;
+		return desconto();
 			
 		}
+
+	//RESULTADO
+	public void resultado(){
+		System.out.println("Saldo Atual:" + desconto() + " teste: "+ getSaldo());
+	}
 	
-		
 	}

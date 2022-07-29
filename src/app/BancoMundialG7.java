@@ -228,9 +228,7 @@ public class BancoMundialG7 {
 		
 		cabecalho();
 		contaCorrente.preenchimento();
-		
-		// RETORNO
-				System.out.println("Saldo: R$ " + contaCorrente.getSaldo());
+		contaCorrente.resultado();
 	}
 	
 	private void acessarContaEstudantil() {
