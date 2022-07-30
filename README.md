@@ -6,7 +6,12 @@
 
 <hr>
 
-<p> Desenvolvedores: Amanda, Anderson, Barbara, Debora, Herick e Sandro </p>
+<p> Desenvolvedores: </p>
+<p>  Amanda - Classe Conta Poupança </p>
+<p>  Anderson - Classe Conta Abstract </p>
+<p>  Barbara - Classe Conta Corrente </p>
+<p>  Herick - Classe Conta Estudantil </p>
+<p>  Sandro - Classe Conta Empresa </p>
 <p> Projeto Integrador da turma 07.2022 Code Tank Java da DigitalHouse e Empiricus </p>
 
-
+<h1 align="center"> Diagrama de Classes UML</h1>
