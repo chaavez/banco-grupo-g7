@@ -7,6 +7,8 @@ public class ContaEspecial extends Conta {
 	/* (+) usarLimite (soma no saldo e tira do limite) */
 	private static double limite = 1000.00;
 
+	Scanner sc = new Scanner(System.in);
+	
 	// CONSTRUTOR CONTA ESPECIAL
 	public ContaEspecial(int numero, String cpf, double limite) {
 		super(numero, cpf);
@@ -31,9 +33,8 @@ public class ContaEspecial extends Conta {
 
 				// DEBITO
 				if (op.equals("d")) {
-					System.out.println("Digite o valor a debitar: "); 
-					double debito = sc.nextInt();
-
+					double debito = ctEspecial.checarValorDigitado();
+										
 					if (debito < getSaldo()) {
 						ctEspecial.debito(debito);
 						System.out.println("Saldo: " + getSaldo() + " | Limite mensal: " + getLimite());
@@ -44,20 +45,20 @@ public class ContaEspecial extends Conta {
 						if (contador == 10 && getSaldo() - debito < 0) {
 							System.out.println("Apos seus 10 movimentos, seu saldo nao pode ficar negativo!");
 							break;
+						} else {
+							double novoLimite = ctEspecial.usarLimite(debito, ctEspecial);
+							limite = novoLimite;
 						}
 						
-						double novoLimite = ctEspecial.usarLimite(debito, ctEspecial);
-						limite = novoLimite;
-
 					} else if (debito - getSaldo() > getLimite()) {
 						System.out.println("Movimentação negada. Seu limite esta em " + getLimite()
 								+ "reais e seu saldo esta em: " + getSaldo() + "reais");
-					}
+						break;
+					} 
 
 				// CREDITO
 				} else if (op.equals("c")) {
-					System.out.println("Digite o valor a creditar: ");
-					int credito = sc.nextInt();
+					double credito = ctEspecial.checarValorDigitado();
 					
 					//VERIFICACAO DE SALDO APOS 10 MOVIMENTOS
 					if (contador == 10 && getSaldo() + credito < 0) {
@@ -70,7 +71,7 @@ public class ContaEspecial extends Conta {
 
 				} else if (op != "d" && op != "c") {
 					System.out.print("\nErro! Informe \'D'ou \'C'!");
-				}
+				} 
 				
 				contador ++;
 
@@ -106,5 +107,25 @@ public class ContaEspecial extends Conta {
 		System.out.println("Saldo final: " + getSaldo() + " | Limite mensal: " + novoLimite);
 
 		return novoLimite;
+	}
+	
+	//METHOD CHECAR VALOR 
+	public Double checarValorDigitado() {
+		Boolean erro;
+		Double valor = 0.0;
+
+		do { 
+			System.out.print("Valor a movimentar: R$");
+			try {
+				valor = Double.parseDouble(sc.next().replace(",", "."));
+				erro = false; 
+			} catch (NumberFormatException e) {
+				System.out.println("Digite um numero real positivo");
+				erro = true;
+			}
+		} while (erro);
+
+		return valor;
+
 	}
 }
