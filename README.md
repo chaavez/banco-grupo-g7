@@ -15,3 +15,6 @@
 <p> Projeto Integrador da turma 07.2022 Code Tank Java da DigitalHouse e Empiricus </p>
 
 <h1 align="center"> Diagrama de Classes UML</h1>
+<p align="center"> 
+<img src="https://user-images.githubusercontent.com/104176853/181915792-a2d53dc3-86fb-4ffc-a10f-bd4cbeacae80.png" width="800px">
+</p>
