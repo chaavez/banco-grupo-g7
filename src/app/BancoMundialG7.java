@@ -86,12 +86,16 @@ public class BancoMundialG7 {
 		System.out.println("Simplificando sua vida\n\n");
 	}
 
-	private void acessarContaEmpresa() {
+	private void verificarConta() {
 		if (contaEmpresa == null) {
 			int numero = setNum();
 			String cpf = setCpf();
 			contaEmpresa = new ContaEmpresa(numero, cpf);
 		}
+
+	}
+
+	private void ativarConta() {
 		if (!contaEmpresa.isAtivo()) {
 			System.out.println("Sua conta está inativa, deseja ativar?");
 			System.out.print("S/N: ");
@@ -102,6 +106,13 @@ public class BancoMundialG7 {
 				menu();
 			}
 		}
+
+	}
+
+	private void acessarContaEmpresa() {
+
+		verificarConta();
+		ativarConta();
 
 		int contador = 1;
 		String continuar = "";
@@ -116,11 +127,13 @@ public class BancoMundialG7 {
 				op = contaEmpresa.mostrarOpcaoDebitoCredito();
 
 				if (op.equals("d")) {
+					contaEmpresa.exibirNomeMovimento(op);
 					Double valor = contaEmpresa.checarValorDigitado();
 					contaEmpresa.debitar(valor);
 
 				}
 				if (op.equals("c")) {
+					contaEmpresa.exibirNomeMovimento(op);
 					Double valor = contaEmpresa.checarValorDigitado();
 					contaEmpresa.creditar(valor);
 
@@ -135,7 +148,7 @@ public class BancoMundialG7 {
 				System.out.print("Continuar movimentação? S/N: ");
 				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
 
-				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
+				// Oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
 				if (contador % 10 == 0 || continuar.equals("n")) {
 					do {
 						if ((!continuar.equals("s") && !continuar.equals("n"))) {
@@ -145,6 +158,7 @@ public class BancoMundialG7 {
 					} while (!continuar.equals("s") && !continuar.equals("n"));
 
 					if (continuar.equals("s")) {
+						contaEmpresa.exibirNomeMovimento(continuar);
 						Double valor = contaEmpresa.checarValorDigitado();
 						contaEmpresa.pedirEmprestimo(valor);
 					}
@@ -167,9 +181,9 @@ public class BancoMundialG7 {
 	}
 
 	public void acessarContaEspecial() {
-		
+
 		double limite = contaEspecial.getLimite();
-		
+
 		if (contaEspecial == null) {
 			int numero = setNum();
 			String cpf = setCpf();
@@ -186,36 +200,35 @@ public class BancoMundialG7 {
 			}
 		}
 
-		//VALORES INICIAIS CLIENTE
+		// VALORES INICIAIS CLIENTE
 		double saldo = contaEspecial.getSaldo();
 		System.out.println("\nSaldo Inicial: " + saldo);
 		System.out.println("Limite Inicial: " + limite);
-		
+
 		contaEspecial.movimento(scanner, contaEspecial);
-		
+
 	}
-	
-	
+
 	private void contaPoupanca() {
-		
+
 		if (contaPoupanca == null) {
 			int numero = setNum();
 			String cpf = setCpf();
 			contaPoupanca = new ContaPoupanca(numero, cpf);
 		}
-		
+
 		if (!contaPoupanca.isAtivo()) {
-			if(contaPoupanca.ativarConta(scanner) == false) {
+			if (contaPoupanca.ativarConta(scanner) == false) {
 				menu();
 			}
-		} 
-		
+		}
+
 		contaPoupanca.mostrarTipoConta();
 		contaPoupanca.movimentar(scanner, contaPoupanca);
 		menu();
-		
+
 	}
-	
+
 	private void acessarContaCorrente() {
 		if (contaCorrente == null) {
 			int numero = setNum();
@@ -232,12 +245,12 @@ public class BancoMundialG7 {
 				menu();
 			}
 		}
-		
+
 		cabecalho();
 		contaCorrente.preencherDados();
 		contaCorrente.mostrarResultado();
 	}
-	
+
 	private void acessarContaEstudantil() {
 		if (contaEstudantil == null) {
 			contaEstudantil = new ContaEstudantil(setNum(), setCpf());
@@ -248,13 +261,13 @@ public class BancoMundialG7 {
 			String ativacao = scanner.next().trim().toLowerCase().substring(0, 1);
 			if (ativacao.equals("s")) {
 				contaEstudantil.setStatusConta(!contaEstudantil.isStatusConta());
-				} else if (ativacao.equals("n")) {
-					menu();
-				}
+			} else if (ativacao.equals("n")) {
+				menu();
+			}
 		}
-						
+
 		int opcaoEstudantil;
-		
+
 		do {
 			contaEstudantil.verificaContador();
 			cabecalho();
@@ -270,35 +283,35 @@ public class BancoMundialG7 {
 			opcaoEstudantil = scanner.nextInt();
 
 			switch (opcaoEstudantil) {
-				case 1:
-					contaEstudantil.debitar(scanner);
-					break;
+			case 1:
+				contaEstudantil.debitar(scanner);
+				break;
 
-				case 2:
-					contaEstudantil.creditar(scanner);
-					break;
+			case 2:
+				contaEstudantil.creditar(scanner);
+				break;
 
-				case 3:
-					contaEstudantil.setarValorEmprestimo(scanner);
-					break;
+			case 3:
+				contaEstudantil.setarValorEmprestimo(scanner);
+				break;
 
-				case 4:
-					contaEstudantil.pagarEmprestimo();
-					break;
+			case 4:
+				contaEstudantil.pagarEmprestimo();
+				break;
 
-				case 5:
-					contaEstudantil.desativarConta();
-					if (!contaEstudantil.isStatusConta()) {
-						opcaoEstudantil = 6;
-					}
-					break;
-
-				default:
-					if (opcaoEstudantil != 6) {
-						System.out.println("\nOpção inválida!");
-						System.out.println("Escolha uma opção na lista!");
-					}
+			case 5:
+				contaEstudantil.desativarConta();
+				if (!contaEstudantil.isStatusConta()) {
+					opcaoEstudantil = 6;
 				}
+				break;
+
+			default:
+				if (opcaoEstudantil != 6) {
+					System.out.println("\nOpção inválida!");
+					System.out.println("Escolha uma opção na lista!");
+				}
+			}
 		} while (opcaoEstudantil != 6);
 
 	}

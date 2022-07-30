@@ -66,12 +66,26 @@ public class ContaEmpresa extends Conta {
 		System.out.println("Erro! Digite 'S' para continuar ou 'N' para sair!");
 	}
 
+	public void exibirNomeMovimento(String tipo) {
+
+		if (tipo.equalsIgnoreCase("d")) {
+			System.out.print("Débito ");
+		}
+		if (tipo.equalsIgnoreCase("c")) {
+			System.out.print("Crédito ");
+		}
+		if (tipo.equalsIgnoreCase("s")) {
+			System.out.print("Empréstimo ");
+		}
+
+	}
+
 	public Double checarValorDigitado() {
 		Boolean erro;
 		Double valor = 0.0;
 
 		do { // enquanto não digitar um número válido, continua no while
-			System.out.print("Valor do crédito: R$");
+			System.out.print("Valor: R$");
 			try {
 				valor = Double.parseDouble(sc.next().replace(",", "."));
 				erro = false; // se chegou aqui é porque o número é válido
