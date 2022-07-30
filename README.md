@@ -9,7 +9,8 @@
 <p> Desenvolvedores: </p>
 <p>  Amanda - Classe Conta Poupança </p>
 <p>  Anderson - Classe Conta Abstract </p>
-<p>  Barbara - Classe Conta Corrente </p>
+<p>  Barbara - Classe Conta Especial </p>
+<p>  Debora - Classe Conta Corrente </p>
 <p>  Herick - Classe Conta Estudantil </p>
 <p>  Sandro - Classe Conta Empresa </p>
 <p> Projeto Integrador da turma 07.2022 Code Tank Java da DigitalHouse e Empiricus </p>
