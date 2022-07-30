@@ -204,6 +204,12 @@ public class BancoMundialG7 {
 			contaPoupanca = new ContaPoupanca(numero, cpf);
 		}
 		
+		if (!contaPoupanca.isAtivo()) {
+			if(contaPoupanca.ativarConta(scanner) == false) {
+				menu();
+			}
+		} 
+		
 		contaPoupanca.mostrarTipoConta();
 		contaPoupanca.movimentar(scanner, contaPoupanca);
 		menu();

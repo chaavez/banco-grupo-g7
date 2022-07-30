@@ -37,7 +37,12 @@ public class ContaPoupanca extends Conta{
 	
 	// METDO CORRECAO DE ANIVERSARIO DE CONTA
 	public double correcao() {
-		return getSaldo() * 0.005;
+		if(getSaldo() > 0) {
+			return getSaldo() * 0.005;
+
+		} else {
+			return getSaldo();
+		}
 	}
 	
 		
@@ -58,76 +63,69 @@ public class ContaPoupanca extends Conta{
 		int contador = 1;
 		String confirma;
 		
-		//// VERIFICA SE A CONTA ESTÁ ATIVA PARA REALIZAR MOVIMENTOS
-		if(ctPoupanca.isAtivo() == true) {
-			do {
-				ctPoupanca.verificaDia(sc);
-				
-				System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
-				String op = sc.next().trim().toLowerCase().substring(0, 1);
-		
-				///// DEBITO
-				if (op.equals("d")) {
-					System.out.print("Valor movimento: R$");
-					double debito = sc.nextDouble();
-					System.out.println("Tem certeza que quer realizar o débito de R$ " + debito + "? S/N");
-					confirma = sc.next().trim().toLowerCase().substring(0, 1);
-					if(confirma.equals("s") && debito >= 0) {
-						ctPoupanca.debito(debito);
-						//System.out.println("Operação realizada!");
-					} else {
-						System.out.println("Operação cancelada!");
-					}
-					ctPoupanca.mostrarTipoConta();
-		
-				///// CREDITO
-				} else if (op.equals("c")) {
-					System.out.print("Valor movimento: R$");
-					double credito = sc.nextDouble();
-					System.out.println("Tem certeza que quer realizar o credito de R$ " + credito + "? S/N");
-					confirma = sc.next().trim().toLowerCase().substring(0, 1);
-					if(confirma.equals("s")) {
-						ctPoupanca.credito(credito);
-						System.out.println("Operação realizada!");
-					} else {
-						System.out.println("Operação cancelada!");
-					}
-					ctPoupanca.mostrarTipoConta();
+		//// REALIZAR MOVIMENTOS
+		do {
+			ctPoupanca.verificaDia(sc);
+			
+			System.out.print("Movimento \'D'\" débito ou \'C'\" crédito: ");
+			String op = sc.next().trim().toLowerCase().substring(0, 1);
 	
-		
-				} else if (!op.equals("d") && !op.equals("c")) {
-					System.out.print("Digite \'C'\" ou \'D'\": ");
+			///// DEBITO
+			if (op.equals("d")) {
+				System.out.print("Valor movimento: R$");
+				double debito = sc.nextDouble();
+				System.out.println("Tem certeza que quer realizar o débito de R$ " + debito + "? S/N");
+				confirma = sc.next().trim().toLowerCase().substring(0, 1);
+				if(confirma.equals("s")) {
+					ctPoupanca.debito(debito);
+					//System.out.println("Operação realizada!");
+				} else {
+					System.out.println("Operação cancelada!");
 				}
-				
-			    ///// CONTINUAR REALIZANDO MOVIMENTOS NA CONTA
-				System.out.print("Continuar S/N: ");
-				continuar = sc.next().trim().toLowerCase().substring(0, 1);
-		
-				contador++;
-				
-				//// REALIZACAO DOS 10 MOVIMENTOS
-				if (contador >= 10) {
-					System.out.println("A conta realizou o limite de movimentos!");
-					System.out.println("Sua conta será encerrada!");
-					System.out.println("O saldo final da conta é de: R$ " + formato.format(getSaldo()));
-					System.out.println();
-					setAtivo(false);
-					break;
+				ctPoupanca.mostrarTipoConta();
+	
+			///// CREDITO
+			} else if (op.equals("c")) {
+				System.out.print("Valor movimento: R$");
+				double credito = sc.nextDouble();
+				System.out.println("Tem certeza que quer realizar o credito de R$ " + credito + "? S/N");
+				confirma = sc.next().trim().toLowerCase().substring(0, 1);
+				if(confirma.equals("s")) {
+					ctPoupanca.credito(credito);
+					System.out.println("Operação realizada!");
+				} else {
+					System.out.println("Operação cancelada!");
 				}
-				
-			} while (continuar.equalsIgnoreCase("s"));
+				ctPoupanca.mostrarTipoConta();
 
-		//// VERIFICA SE QUER ATIVAR A CONTA
-		} else {
-			ctPoupanca.setAtivo(ativarConta(sc));
-		}
-		
+	
+			} else if (!op.equals("d") && !op.equals("c")) {
+				System.out.print("Digite \'C'\" ou \'D'\": ");
+			}
+			
+		    ///// CONTINUAR REALIZANDO MOVIMENTOS NA CONTA
+			System.out.print("Continuar S/N: ");
+			continuar = sc.next().trim().toLowerCase().substring(0, 1);
+	
+			contador++;
+			
+			//// REALIZACAO DOS 10 MOVIMENTOS
+			if (contador >= 10) {
+				System.out.println("A conta realizou o limite de movimentos!");
+				System.out.println("Sua conta será encerrada!");
+				System.out.println("O saldo final da conta é de: R$ " + formato.format(getSaldo()));
+				System.out.println();
+				setAtivo(false);
+				break;
+			}
+			
+		} while (continuar.equalsIgnoreCase("s"));
 		
 	}
  	
  	
  	/// PERGUNTA AO USUARIO SE QUER OU NÃO ATIVAR A CONTA
- 	public static boolean ativarConta(Scanner sc) {
+ 	public boolean ativarConta(Scanner sc) {
  		System.out.println("Deseja ativar sua conta? S/N");
 		String ativar = sc.next().trim().toLowerCase().substring(0, 1);
 		if(ativar.equals("s")) {
@@ -142,7 +140,8 @@ public class ContaPoupanca extends Conta{
 	public void debito(double valor) {		
 
 		if (valor <= getSaldo()) {
-			super.debito(valor);			
+			super.debito(valor);
+			System.out.println("Operação realizada!");
 		} else {
 			System.out.println("Operação Inválida!");
 		}
