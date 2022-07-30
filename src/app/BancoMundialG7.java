@@ -281,7 +281,7 @@ public class BancoMundialG7 {
 				case 5:
 					contaEstudantil.desativarConta();
 					if (!contaEstudantil.isStatusConta()) {
-						menu();
+						opcaoEstudantil = 6;
 					}
 					break;
 

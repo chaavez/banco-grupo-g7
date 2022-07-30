@@ -57,6 +57,7 @@ public class ContaEstudantil extends Conta {
 		double valor = sc.nextDouble();
 		debito(valor);
 		contador++;
+		System.out.println("Pagamento efetuado!");
 		mostrarSaldo();
 	}
 
@@ -65,6 +66,7 @@ public class ContaEstudantil extends Conta {
 		double valor = sc.nextDouble();
 		credito(valor);
 		contador++;
+		System.out.println("Depósito efetuado!");
 		mostrarSaldo();
 	}
 
@@ -125,9 +127,13 @@ public class ContaEstudantil extends Conta {
 			op = sc.next().trim().toLowerCase().substring(0, 1);
 	
 			if (op.equals("s")) {
-				debito(valorDevido);
-				setEmprestimoDisponivel(5000 - emprestimoDisponivel);
-				break;
+				if (getSaldo() >= valorDevido) {
+					debito(valorDevido);
+					setEmprestimoDisponivel(5000 - emprestimoDisponivel);
+					break;
+				}else {
+					System.out.println("Saldo Insuficiente!");
+				}
 			} else if (op.equals("n")) {
 				break;
 			} else {
