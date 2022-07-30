@@ -110,17 +110,19 @@ public class BancoMundialG7 {
 		cabecalho();
 		contaEmpresa.mostrarNomeConta();
 
-		do { //Bloco para execusão do aplictivo enquanto continuar for "s"
+		do { // Bloco para execução do aplictivo enquanto continuar for "s"
 
 			do { // Bloco referente ao movimento de crédito ou débito
 				op = contaEmpresa.mostrarOpcaoDebitoCredito();
 
 				if (op.equals("d")) {
-					contaEmpresa.debitar();
+					Double valor = contaEmpresa.checarValorDigitado();
+					contaEmpresa.debitar(valor);
 
 				}
 				if (op.equals("c")) {
-					contaEmpresa.creditar();
+					Double valor = contaEmpresa.checarValorDigitado();
+					contaEmpresa.creditar(valor);
 
 				}
 				if (!op.equals("d") && !op.equals("c")) {
@@ -136,14 +138,15 @@ public class BancoMundialG7 {
 				// oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
 				if (contador % 10 == 0 || continuar.equals("n")) {
 					do {
-						if((!continuar.equals("s") && !continuar.equals("n"))) {
+						if ((!continuar.equals("s") && !continuar.equals("n"))) {
 							contaEmpresa.exibirErroDigitacaoSimNao();
-						}							
-						continuar = contaEmpresa.oferecerEmprestimo();												
+						}
+						continuar = contaEmpresa.oferecerEmprestimo();
 					} while (!continuar.equals("s") && !continuar.equals("n"));
 
-					if (continuar.equals("s")) {						
-						contaEmpresa.setarValorEmprestimo();						
+					if (continuar.equals("s")) {
+						Double valor = contaEmpresa.checarValorDigitado();
+						contaEmpresa.pedirEmprestimo(valor);
 					}
 
 					System.out.print("Continuar movimentação? S/N: ");
@@ -160,7 +163,6 @@ public class BancoMundialG7 {
 		} while (continuar.equalsIgnoreCase("s"));
 		contaEmpresa.mostrarSaldo();
 		System.out.println();
-
 
 	}
 

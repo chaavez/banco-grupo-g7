@@ -20,19 +20,18 @@ public class ContaEmpresa extends Conta {
 	}
 
 	@Override
-	public void debito(double valor) {		
+	public void debito(double valor) {
 
 		if (valor <= getSaldo()) {
-			super.debito(valor);			
+			super.debito(valor);
 		} else {
 			System.out.println("Operação Inválida!");
 		}
-	}	
+	}
 
-	// método soma no saldo e tira do empréstimo
+	// método da ega de negócio que soma no saldo e tira do empréstimo
 	public void pedirEmprestimo(Double valor) {
-		
-		
+
 		if (valor > 0 && valor <= emprestimoEmpresa) {
 			emprestimoEmpresa -= valor;
 			credito(valor);
@@ -40,9 +39,9 @@ public class ContaEmpresa extends Conta {
 			mostrarSaldo();
 		} else {
 			System.out.println("Empréstimo não realizado!");
-		}		
+		}
 
-	}		
+	}
 
 	public void mostrarNomeConta() {
 		System.out.println("CONTA EMPRESA");
@@ -66,17 +65,34 @@ public class ContaEmpresa extends Conta {
 	public void exibirErroDigitacaoSimNao() {
 		System.out.println("Erro! Digite 'S' para continuar ou 'N' para sair!");
 	}
-	
-	public void debitar() {
-		System.out.print("Valor do débito: R$");
-		double valor = sc.nextDouble();
+
+	public Double checarValorDigitado() {
+		Boolean erro;
+		Double valor = 0.0;
+
+		do { // enquanto não digitar um número válido, continua no while
+			System.out.print("Valor do crédito: R$");
+			try {
+				valor = Double.parseDouble(sc.next().replace(",", "."));
+				erro = false; // se chegou aqui é porque o número é válido
+			} catch (NumberFormatException e) {
+				// numero inválido
+				System.out.println("Digite um numero real positivo");
+				erro = true;
+			}
+		} while (erro);
+
+		return valor;
+
+	}
+
+	public void debitar(Double valor) {
+
 		debito(valor);
 		mostrarSaldo();
 	}
 
-	public void creditar() {
-		System.out.print("Valor do crédito: R$");
-		double valor = sc.nextDouble();
+	public void creditar(Double valor) {
 		credito(valor);
 		mostrarSaldo();
 	}
@@ -89,12 +105,4 @@ public class ContaEmpresa extends Conta {
 		return continuar;
 	}
 
-	public void setarValorEmprestimo() {		
-				
-		System.out.print("Valor do empréstimo: ");		
-		double valorEmprestimo = sc.nextDouble();
-		pedirEmprestimo(valorEmprestimo);
-		
-	}
-	
 }
