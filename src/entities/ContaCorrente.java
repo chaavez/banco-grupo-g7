@@ -19,6 +19,10 @@ public class ContaCorrente extends Conta {
 		return contadorTalao;
 	}
 
+	public void setContadorTalao(int contadorTalao) {
+		this.contadorTalao = contadorTalao;
+	}
+
 	// MÉTODO PARA PREENCHIMENTO DE INFO
 
 	public void preencherDados() {
@@ -37,12 +41,7 @@ public class ContaCorrente extends Conta {
 			if (op.equals("d")) {
 				System.out.print("Valor movimento - débito: R$");
 				double valor = sc.nextDouble();
-
-				if (valor <= saldo) {
-					super.debito(valor);
-				} else {
-					System.out.println("Operação Inválida!");
-				}
+				this.debito(valor);
 
 			} else if (op.equals("c")) {
 				System.out.print("Valor movimento - crédito: R$");
@@ -64,52 +63,74 @@ public class ContaCorrente extends Conta {
 
 		} while (continuar.equalsIgnoreCase("s"));
 
-		// CONDICIONAL PARA LIBERAÇÃO DE CÓDIGO
+		dados();
 
-		while (contadorTalao >= 1) {
-			if (getSaldo() > 90) {
+	}
+
+	// CONDICIONAL PARA LIBERAÇÃO DE CÓDIGO
+
+	public void dados() {
+		String continuar;
+
+		while (contadorTalao >= 1 && getSaldo() >= 30) {
+			if (getSaldo() >= 90) {
 				int qtCheque;
-				System.out.println("\n Você possui " + contadorTalao
-						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+				System.out.println("\n Você possui cheques até " + contadorTalao
+						+ " disponíveis liberados! \n Deseja solicitar? (S/N)");
 				continuar = sc.next().trim().toLowerCase().substring(0, 1);
 				if (continuar.equalsIgnoreCase("s")) {
 					System.out.println("Você deseja quantos talões?");
 					qtCheque = sc.nextInt();
-					liberarCheque(qtCheque);
-					System.out.println("Talão resgatado!");
+					if (qtCheque <= 3 && qtCheque <= contadorTalao) {
+						liberarCheque(qtCheque);
+						System.out.println("Talão resgatado!");
+					} else {
+						System.out.println(
+								"Número de talão inválido, digite um número menor ou igual a " + contadorTalao);
+						dados();
+
+					}
 					return;
 				} else {
 					return;
 				}
-			} else if (getSaldo() > 60) {
+			} else if (getSaldo() >= 60) {
 				int qtCheque;
-				System.out.println("\n Você possui " + contadorTalao
-						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+				System.out.println("\n Você possui cheques até " + contadorTalao
+						+ " disponíveis liberados! \n Deseja solicitar? (S/N)");
 				continuar = sc.next().trim().toLowerCase().substring(0, 1);
 				if (continuar.equalsIgnoreCase("s")) {
 					System.out.println("Você deseja quantos talões?");
 					qtCheque = sc.nextInt();
-					liberarCheque(qtCheque);
-					System.out.println("Talão resgatado!");
+					if (qtCheque <= 2 && qtCheque <= contadorTalao) {
+						liberarCheque(qtCheque);
+						System.out.println("Talão resgatado!");
+
+					} else {
+						System.out.println(
+								"Número de talão inválido, digite um número menor ou igual a " + contadorTalao);
+						dados();
+
+					}
 					return;
 				} else {
 					return;
 				}
-			} else if (getSaldo() > 30) {
-				int qtCheque;
-				System.out.println("\n Você possui " + contadorTalao
-						+ " cheques disponíveis liberados! \n Deseja solicitar? (S/N)");
+			} else if (getSaldo() >= 30) {
+				int qtCheque = 1;
+				System.out.println(
+						"\n Você possui cheque " + qtCheque + " disponível liberados! \n Deseja solicitar? (S/N)");
 				continuar = sc.next().trim().toLowerCase().substring(0, 1);
 				if (continuar.equalsIgnoreCase("s")) {
-					System.out.println("Você deseja quantos talões?");
-					qtCheque = sc.nextInt();
 					liberarCheque(qtCheque);
-					//System.out.println("Talão resgatado!");
+					System.out.println("Talão resgatado!");
+
 					return;
 				} else {
 					return;
 				}
 			}
+
 		}
 
 	}
@@ -124,14 +145,5 @@ public class ContaCorrente extends Conta {
 	public void mostrarResultado() {
 		System.out.println("Saldo Atual:" + getSaldo());
 	}
-	@Override
-	public void debito(double valor) {		
-
-		if (valor <= getSaldo()) {
-			super.debito(valor);			
-		} else {
-			System.out.println("Saldo insuficiente");
-		}
-	}	
 
 }
