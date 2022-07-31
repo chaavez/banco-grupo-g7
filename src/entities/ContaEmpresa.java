@@ -29,19 +29,19 @@ public class ContaEmpresa extends Conta {
 		}
 	}
 
-	// método da ega de negócio que soma no saldo e tira do empréstimo
-	public void pedirEmprestimo(Double valor) {
+	// método da regra de negócio que soma no saldo e tira do empréstimo
+		public void pedirEmprestimo(Double valor) {
 
-		if (valor > 0 && valor <= emprestimoEmpresa) {
-			emprestimoEmpresa -= valor;
-			credito(valor);
-			System.out.println("Empréstimo efetivado!");
-			mostrarSaldo();
-		} else {
-			System.out.println("Empréstimo não realizado!");
+			if (valor > 0 && valor <= emprestimoEmpresa) {
+				emprestimoEmpresa -= valor;
+				credito(valor);
+				System.out.println("Empréstimo efetivado!");
+				mostrarSaldo();
+			} else {
+				System.out.println("Empréstimo não realizado!");
+			}
+
 		}
-
-	}
 
 	public void mostrarNomeConta() {
 		System.out.println("CONTA EMPRESA");
