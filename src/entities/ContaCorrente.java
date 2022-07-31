@@ -141,9 +141,19 @@ public class ContaCorrente extends Conta {
 		debito(30 * ctTalao);
 	}
 
-	// METODO PARA RESULTADO
+	// RESULTADO
 	public void mostrarResultado() {
 		System.out.println("Saldo Atual:" + getSaldo());
+	}
+	
+	@Override
+	public void debito(double valor) {		
+
+		if (valor <= getSaldo()) {
+			super.debito(valor);			
+		} else {
+			System.out.println("Saldo insuficiente");
+		}
 	}
 
 }
