@@ -198,7 +198,6 @@ public class BancoMundialG7 {
 
 		contaPoupanca.mostrarTipoConta();
 		contaPoupanca.movimentar(scanner, contaPoupanca);
-		menu();
 
 	}
 
