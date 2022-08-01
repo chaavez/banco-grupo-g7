@@ -114,17 +114,16 @@ public class BancoMundialG7 {
 		verificarConta();
 		ativarConta();
 
-		int contador = 1;		
+		int contador = 1;
 		String op = "";
 
 		cabecalho();
 		contaEmpresa.mostrarNomeConta();
 
 		do {
-			
-			op = contaEmpresa.exibirMenu();	
-			
-			
+
+			op = contaEmpresa.exibirMenu();
+
 			switch (op) {
 			case "c":
 				contaEmpresa.acessarCredito(op);
@@ -142,12 +141,14 @@ public class BancoMundialG7 {
 				System.out.println("Opção inválda");
 				System.out.println();
 			}
-			
-			if (contador % 10 == 0) {
+
+			/* o sistema só vai oferer o empréstimo após 10 movimentos se tiver valor
+			 disponível para empréstimo.*/
+			if (contador % 10 == 0 && contaEmpresa.getEmprestimoEmpresa() > 0) {
 				contaEmpresa.acessarEmprestimo(op);
 			}
 			contador++;
-			
+
 		} while (!(op.equals("s")));
 
 	}
