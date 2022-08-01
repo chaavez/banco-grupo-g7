@@ -114,69 +114,41 @@ public class BancoMundialG7 {
 		verificarConta();
 		ativarConta();
 
-		int contador = 1;
-		String continuar = "";
+		int contador = 1;		
 		String op = "";
 
 		cabecalho();
 		contaEmpresa.mostrarNomeConta();
 
-		do { // Bloco para execução do aplictivo enquanto continuar for "s"
+		do {
+			
+			op = contaEmpresa.exibirMenu();	
+			
+			
+			switch (op) {
+			case "c":
+				contaEmpresa.acessarCredito(op);
+				break;
 
-			do { // Bloco referente ao movimento de crédito ou débito
-				op = contaEmpresa.mostrarOpcaoDebitoCredito();
+			case "d":
+				contaEmpresa.acessarDebito(op);
+				break;
 
-				if (op.equals("d")) {
-					contaEmpresa.exibirNomeMovimento(op);
-					Double valor = contaEmpresa.checarValorDigitado();
-					contaEmpresa.debitar(valor);
+			case "e":
+				contaEmpresa.acessarEmprestimo(op);
+				break;
 
-				}
-				if (op.equals("c")) {
-					contaEmpresa.exibirNomeMovimento(op);
-					Double valor = contaEmpresa.checarValorDigitado();
-					contaEmpresa.creditar(valor);
-
-				}
-				if (!op.equals("d") && !op.equals("c")) {
-					contaEmpresa.exibirErroDigitacaoDebitoCredito();
-				}
-
-			} while (!op.equals("d") && !op.equals("c"));
-
-			do {// Bloco referente a opção de empréstimo
-				System.out.print("Continuar movimentação? S/N: ");
-				continuar = scanner.next().trim().toLowerCase().substring(0, 1);
-
-				// Oferecer empréstimo após 10 movimentos ou se o usuário escolher continuar "n"
-				if (contador % 10 == 0 || continuar.equals("n")) {
-					do {
-						if ((!continuar.equals("s") && !continuar.equals("n"))) {
-							contaEmpresa.exibirErroDigitacaoSimNao();
-						}
-						continuar = contaEmpresa.oferecerEmprestimo();
-					} while (!continuar.equals("s") && !continuar.equals("n"));
-
-					if (continuar.equals("s")) {
-						contaEmpresa.exibirNomeMovimento(continuar);
-						Double valor = contaEmpresa.checarValorDigitado();
-						contaEmpresa.pedirEmprestimo(valor);
-					}
-
-					System.out.print("Continuar movimentação? S/N: ");
-					continuar = scanner.next().trim().toLowerCase().substring(0, 1);
-				}
-
-				if (!continuar.equals("s") && !continuar.equals("n")) {
-					contaEmpresa.exibirErroDigitacaoSimNao();
-				}
-				contador++;
-
-			} while (!continuar.equals("s") && !continuar.equals("n"));
-
-		} while (continuar.equalsIgnoreCase("s"));
-		contaEmpresa.mostrarSaldo();
-		System.out.println();
+			default:
+				System.out.println("Opção inválda");
+				System.out.println();
+			}
+			
+			if (contador % 10 == 0) {
+				contaEmpresa.acessarEmprestimo(op);
+			}
+			contador++;
+			
+		} while (!(op.equals("s")));
 
 	}
 

@@ -22,7 +22,7 @@ public class ContaEmpresa extends Conta {
 	@Override
 	public void debito(double valor) {
 
-		if (valor <= getSaldo()) {
+		if (valor > 0 && valor <= getSaldo()) {
 			super.debito(valor);
 		} else {
 			System.out.println("Operação Inválida!");
@@ -30,18 +30,73 @@ public class ContaEmpresa extends Conta {
 	}
 
 	// método da regra de negócio que soma no saldo e tira do empréstimo
-		public void pedirEmprestimo(Double valor) {
+	public void pedirEmprestimo(Double valor) {
 
-			if (valor > 0 && valor <= emprestimoEmpresa) {
-				emprestimoEmpresa -= valor;
-				credito(valor);
-				System.out.println("Empréstimo efetivado!");
-				mostrarSaldo();
-			} else {
-				System.out.println("Empréstimo não realizado!");
+		if (valor > 0 && valor <= emprestimoEmpresa) {
+			emprestimoEmpresa -= valor;
+			credito(valor);
+			System.out.println("Empréstimo efetivado!");
+			mostrarSaldo();
+		} else {
+			System.out.println("Empréstimo não realizado!");
+		}
+	}
+
+	public String exibirMenu() {
+		String opcao;
+		System.out.println();
+		System.out.println("MOVIMENTAÇÃO");
+		System.out.println("[C] - CRÉDITO");
+		System.out.println("[D] - DÉBITO");
+		System.out.println("[E] - EMPRÉSTIMO");
+		System.out.println("[S] - SAIR");
+		System.out.print("Escolha a opção: ");
+		opcao = sc.next().trim().toLowerCase().substring(0, 1);
+
+		return opcao;
+
+	}
+
+	public void acessarCredito(String tipo) {
+
+		exibirNomeMovimento(tipo);
+		Double valor = checarValorDigitado();
+		creditar(valor);
+
+	}
+
+	public void acessarDebito(String tipo) {
+
+		exibirNomeMovimento(tipo);
+		Double valor = checarValorDigitado();
+		debitar(valor);
+	}
+
+	public void acessarEmprestimo(String tipo) {
+		String aux;
+
+		if (checarValorDisponívelEmprestimo()) {
+			System.out.println("Você já utilizou todo limite disponível!");
+		} else {
+
+			aux = oferecerEmprestimo();
+
+			while (!aux.equals("s") && !aux.equals("n")) {
+				exibirErroDigitacaoSimNao();
+				aux = continuarMovimentacao(tipo);
 			}
 
+			exibirNomeMovimento(tipo);
+			Double valor = checarValorDigitado();
+			pedirEmprestimo(valor);
 		}
+	}
+
+	public String continuarMovimentacao(String continuar) {
+		System.out.print("Continuar movimentação? S/N: ");
+		continuar = sc.next().trim().toLowerCase().substring(0, 1);
+		return continuar;
+	}
 
 	public void mostrarNomeConta() {
 		System.out.println("CONTA EMPRESA");
@@ -71,11 +126,14 @@ public class ContaEmpresa extends Conta {
 		if (tipo.equalsIgnoreCase("d")) {
 			System.out.print("Débito ");
 		}
+
 		if (tipo.equalsIgnoreCase("c")) {
 			System.out.print("Crédito ");
 		}
-		if (tipo.equalsIgnoreCase("s")) {
+
+		if (tipo.equalsIgnoreCase("e")) {
 			System.out.print("Empréstimo ");
+
 		}
 
 	}
@@ -109,6 +167,14 @@ public class ContaEmpresa extends Conta {
 	public void creditar(Double valor) {
 		credito(valor);
 		mostrarSaldo();
+	}
+
+	public Boolean checarValorDisponívelEmprestimo() {
+
+		if (getEmprestimoEmpresa() == 0) {
+			return true;
+		}
+		return false;
 	}
 
 	public String oferecerEmprestimo() {
